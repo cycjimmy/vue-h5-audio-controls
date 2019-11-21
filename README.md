@@ -11,10 +11,8 @@
 [![jest][jest-image]][jest-url]
 [![npm license][license-image]][download-url]
 
-* Simple h5 music controller for vue. [Demo][github-pages-url]
-* @cycjimmy/vue-h5-audio-controls is based on [@cycjimmy/h5-audio-controls](https://github.com/cycjimmy/h5-audio-controls). 
-* This plugin extends @cycjimmy/h5-audio-controls to support vue@2. Its rendering mode is still DOM.
-
+* Simple h5 music controller for vue. [Demo][github-pages-url]. 
+* This plugin extends [@cycjimmy/h5-audio-controls](https://github.com/cycjimmy/h5-audio-controls) to support vue@2. Its rendering mode is still DOM.
 
 ## How to use
 ### Install
@@ -70,7 +68,7 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
   * `stop()`: Stop the audio.
   * `isPlaying()`: Return whether the audio is playing.
   
-一个完整的例子
+An advanced example:
 ```vue
 <template>
   <div>
@@ -147,7 +145,7 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
 
 To use via a CDN include this in your html:
 ```text
-<script src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@1/dist/vue-h5-audio-controls.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@1/dist/h5-audio-controls.umd.min.js"></script>
 ```
 
 <!-- Links: -->
