@@ -48,6 +48,6 @@ export default {
       autoPlay: this.autoPlay
     });
 
-    this.h5AudioControls.setContext(parentNode).load();
+    this.h5AudioControls.load();
   }
 };

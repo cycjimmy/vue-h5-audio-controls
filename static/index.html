@@ -18,7 +18,7 @@
 
     .buttons-wrapper {
       display: flex;
-      padding: 100px 40px;
+      padding: 60px 40px 0;
     }
 
     .button {
@@ -57,12 +57,18 @@
       <h5-audio-controls
         ref="h5AudioControls"
         :src="audioControlsConfig.src"
+        :position="audioControlsConfig.position"
+        :buttonSize="audioControlsConfig.buttonSize"
+        :iconSize="audioControlsConfig.iconSize"
       />
     </div>`,
     data() {
       return {
         audioControlsConfig: {
-          src: "https://cycjimmy.github.io/staticFiles/media/Richard_Clayderman-LOVE_IS_BLUE.mp3"
+          src: 'https://cycjimmy.github.io/staticFiles/media/Richard_Clayderman-LOVE_IS_BLUE.mp3',
+          position: 'left-top',
+          buttonSize: '15vw',
+          iconSize: '10vw'
         }
       }
     },
