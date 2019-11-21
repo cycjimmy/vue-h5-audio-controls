@@ -11,28 +11,28 @@
 [![jest][jest-image]][jest-url]
 [![npm license][license-image]][download-url]
 
-* Simple h5 music controller for vue. [Demo][github-pages-url]. 
-* This plugin extends [@cycjimmy/h5-audio-controls](https://github.com/cycjimmy/h5-audio-controls) to support vue@2. Its rendering mode is still DOM.
+* 简易的Vue版H5音乐控制器. [Demo][github-pages-url]. 
+* 该插件将 [@cycjimmy/h5-audio-controls](https://github.com/cycjimmy/h5-audio-controls) 扩展到为支持vue@2. 它的渲染模式仍是DOM.
 
 [English][Readme-url-En] | [中文][Readme-url-ZhCN]
 ***
 
-## How to use
-### Install
+## 如何使用
+### 安装
 [![NPM version][npm-image]][npm-url]
 [![NPM bundle size][npm-bundle-size-image]][npm-url]
 [![npm download][download-image]][download-url]
 
 ```shell
 $ npm install @cycjimmy/vue-h5-audio-controls --save
-# or
+# 或者
 $ yarn add @cycjimmy/vue-h5-audio-controls
 ```
 
-### Usage
+### 使用
 [![vue][vue-image]][vue-url]
 
-Use plugin by calling the `Vue.use()`. This has to be done before you start your app by calling `new Vue()`:
+通过调用 `Vue.use()` 使用插件. 这需要在你调用 `new Vue()` 启动应用之前完成:
 ```javascript
 import Vue from 'vue';
 import H5AudioControls from '@cycjimmy/vue-h5-audio-controls';
@@ -40,7 +40,7 @@ import H5AudioControls from '@cycjimmy/vue-h5-audio-controls';
 Vue.use(H5AudioControls);
 ```
 
-Put `<h5-audio-controls />` into vue node which is preferably the root node
+将 `<h5-audio-controls />` 组件放入Vue节点中，该节点最好是根节点
 ```vue
 <template>
   <div>
@@ -52,26 +52,26 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
 ```
 
 * Props
-  * `src`: [Require][string] a url to an audio file
-  * `position`: [Option][string] the position of audio controller.
-    * Choose one of the four options:
+  * `src`: [必选][string] 音频文件的URL地址.
+  * `position`: [可选][string] 设定控制器的位置.
+    * 选择以下四个选项之一:
       * `'left-top'`
-      * `'top-right'`(Default)
+      * `'top-right'`(默认)
       * `'right-bottom'`
       * `'left-bottom'`
-  * `buttonSize`: [Option][string|number] Set button wrapper size.
-  * `iconSize`: [Option][string|number] Set button icon size.
-  * `playIcon`: [Option][string] Set play icon.
-  * `pauseIcon`: [Option][string] Set pause icon.
-  * `autoPlay`: [Option][boolean] Whether to play immediately after loading. Default `true`.
+  * `buttonSize`: [可选][string|number] 设置按钮包裹层的尺寸.
+  * `iconSize`: [可选][string|number] 设置按钮图标的尺寸.
+  * `playIcon`: [可选][string] 设置播放图标.
+  * `pauseIcon`: [可选][string] 设置暂停图标.
+  * `autoPlay`: [可选][boolean] 加载后是否立即播放(自动播放). 默认为 `true`.
 
-* Methods
-  * `play()`: Play the audio.
-  * `pause()`: Pause the audio.
-  * `stop()`: Stop the audio.
-  * `isPlaying()`: Return whether the audio is playing.
+* Methods 方法
+  * `play()`: 播放音频.
+  * `pause()`: 暂停音频.
+  * `stop()`: 停止音频.
+  * `isPlaying()`: 返回音频是否正在播放.
   
-### An advanced example
+### 一个进阶的例子
 ```vue
 <template>
   <div>
@@ -123,7 +123,7 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
 </script>
 ```
 
-### Quick experience（Use in browser）
+### 快速体验（在浏览器中使用）
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script src="vue-h5-audio-controls.umd.min.js"></script>
@@ -146,7 +146,7 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
 ## CDN
 [![jsdelivr][jsdelivr-image]][jsdelivr-url]
 
-To use via a CDN include this in your html:
+使用CDN可在您的html中添加:
 ```text
 <script src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@1/dist/h5-audio-controls.umd.min.js"></script>
 ```
