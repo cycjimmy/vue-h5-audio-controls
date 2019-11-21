@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link rel="shortcut icon" href="./favicon.ico">
+  <title>H5 Audio Controls for Vue</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0a4f56;
+    }
+
+    .buttons-wrapper {
+      display: flex;
+      padding: 100px 40px;
+    }
+
+    .button {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      margin: 0 5px;
+
+      font-size: 16px;
+      border: 1px solid white;
+      border-radius: 4px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="./h5-audio-controls.umd.js"></script>
+<script type="module">
+  Vue.use(H5AudioControls);
+
+  new Vue({
+    el: '#app',
+    template: `
+    <div>
+      <div class="buttons-wrapper">
+        <a href="javascript:" class="button" @click="play">play</a>
+        <a href="javascript:" class="button" @click="pause">pause</a>
+        <a href="javascript:" class="button" @click="stop">stop</a>
+        <a href="javascript:" class="button" @click="trigger">trigger</a>
+      </div>
+
+      <h5-audio-controls
+        ref="h5AudioControls"
+        :src="audioControlsConfig.src"
+      />
+    </div>`,
+    data() {
+      return {
+        audioControlsConfig: {
+          src: "https://cycjimmy.github.io/staticFiles/media/Richard_Clayderman-LOVE_IS_BLUE.mp3"
+        }
+      }
+    },
+    methods: {
+      play() {
+        this.$refs.h5AudioControls.play();
+      },
+      pause() {
+        this.$refs.h5AudioControls.pause();
+      },
+      stop() {
+        this.$refs.h5AudioControls.stop();
+      },
+      trigger() {
+        if (this.$refs.h5AudioControls.isPlaying()) {
+          this.$refs.h5AudioControls.pause();
+        } else {
+          this.$refs.h5AudioControls.play();
+        }
+      }
+    }
+  });
+</script>
+<div id="app"></div>
+</body>
+</html>

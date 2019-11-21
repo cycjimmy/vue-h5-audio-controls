@@ -1,0 +1,69 @@
+{
+  "name": "@cycjimmy/vue-h5-audio-controls",
+  "version": "0.0.0-development",
+  "description": "Simple h5 music controller for vue",
+  "main": "dist/h5-audio-controls.cjs.js",
+  "module": "dist/h5-audio-controls.esm.js",
+  "browser": "dist/h5-audio-controls.umd.min.js",
+  "scripts": {
+    "start": "npm run dev",
+    "test": "jest --color",
+    "coveralls": "jest --color --coverage",
+    "lint": "eslint -c .eslintrc 'src/**/*.js'",
+    "lint:fix": "eslint --fix -c .eslintrc 'src/**/*.js' --fix",
+    "dev": "cross-env NODE_ENV=development rollup -c rollup/rollup.config.dev.js --watch",
+    "build": "npm run build:prod:umd && npm run build:prod",
+    "build:prod": "cross-env NODE_ENV=production rollup -c rollup/rollup.config.prod.js",
+    "build:prod:umd": "cross-env NODE_ENV=production rollup -c rollup/rollup.config.dev.js",
+    "build:deployment": "cross-env NODE_ENV=deployment rollup -c rollup/rollup.config.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cycjimmy/vue-h5-audio-controls.git"
+  },
+  "keywords": [
+    "vue",
+    "h5",
+    "audio",
+    "control"
+  ],
+  "author": "cycjimmy <cycjimmy@gmail.com> (https://github.com/cycjimmy)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cycjimmy/vue-h5-audio-controls/issues"
+  },
+  "homepage": "https://github.com/cycjimmy/vue-h5-audio-controls#readme",
+  "files": [
+    "/dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@cycjimmy/h5-audio-controls": "^3.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@cycjimmy/awesome-js-funcs": "^2.1.0",
+    "@cycjimmy/config-lib": "^1.5.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-jest": "^24.9.0",
+    "coveralls": "^3.0.7",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.6.0",
+    "eslint-config-rollup": "^0.1.0",
+    "jest": "^24.9.0",
+    "rollup": "^1.27.2",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-browsersync": "^1.0.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
