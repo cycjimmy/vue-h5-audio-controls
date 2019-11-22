@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.3...v1.0.4) (2019-11-22)
+
+
+### Performance Improvements
+
+* **dependency:** use exact version of @cycjimmy/h5-audio-controls ([e65d757](https://github.com/cycjimmy/vue-h5-audio-controls/commit/e65d75729f515ef43cb69521fcc252adba873e64))
+
 ## [1.0.3](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.2...v1.0.3) (2019-11-22)
 
 
