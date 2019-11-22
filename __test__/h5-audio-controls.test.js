@@ -8,6 +8,7 @@ describe('H5AudioControls', () => {
     window.HTMLMediaElement.prototype.load = () => {
       /* do nothing */
     };
+    // eslint-disable-next-line func-names
     window.HTMLMediaElement.prototype.play = function() {
       Object.defineProperty(this, 'paused', {
         configurable: true,
@@ -16,6 +17,7 @@ describe('H5AudioControls', () => {
         }
       });
     };
+    // eslint-disable-next-line func-names
     window.HTMLMediaElement.prototype.pause = function() {
       Object.defineProperty(this, 'paused', {
         configurable: true,
@@ -51,5 +53,19 @@ describe('H5AudioControls', () => {
     expect(vm.isPlaying()).toBe(true);
     vm.pause();
     expect(vm.isPlaying()).toBe(false);
+  });
+
+  it('h5AudioControls watch test', (done) => {
+    wrapper.setProps({
+      src: 'https://www.xxx.com/bar.mp3',
+      position: 'left-top',
+      buttonSize: '16vw',
+      iconSize: '10vw',
+      playIcon: 'https://www.xxx.com/playIcon.svg',
+      pauseIcon: 'https://www.xxx.com/pauseIcon.svg',
+      autoPlay: false
+    });
+
+    setTimeout(done, 500);
   });
 });

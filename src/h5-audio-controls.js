@@ -48,6 +48,15 @@ export default {
     },
     iconSize(val) {
       this.h5AudioControls.changeIconSize(val);
+    },
+    playIcon(val) {
+      this.h5AudioControls.change('playIcon', val);
+    },
+    pauseIcon(val) {
+      this.h5AudioControls.change('pauseIcon', val);
+    },
+    autoPlay(val) {
+      this.h5AudioControls.change('autoPlay', val);
     }
   },
   mounted() {
