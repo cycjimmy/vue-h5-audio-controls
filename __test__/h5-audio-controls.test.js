@@ -26,11 +26,17 @@ describe('H5AudioControls', () => {
     };
   });
 
-  const wrapper = mount(H5AudioControls, {
-    propsData: {
-      src: 'https://www.xxx.com/foo.mp3'
+  const parent = mount({
+    template: `
+    <div>
+      <h5-audio-controls src="https://www.xxx.com/foo.mp3" />
+    </div>`,
+    components: {
+      H5AudioControls
     }
   });
+
+  const wrapper = parent.find(H5AudioControls);
   const { vm } = wrapper;
 
   it('h5AudioControls is a Vue instance', () => {

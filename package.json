@@ -40,7 +40,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@cycjimmy/h5-audio-controls": "^3.1.2"
+    "@cycjimmy/h5-audio-controls": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

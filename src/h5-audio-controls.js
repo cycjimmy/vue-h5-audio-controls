@@ -36,6 +36,20 @@ export default {
       return this.h5AudioControls.isPlaying();
     }
   },
+  watch: {
+    src(val) {
+      this.h5AudioControls.changeAudioSrc(val);
+    },
+    position(val) {
+      this.h5AudioControls.changePosition(val);
+    },
+    buttonSize(val) {
+      this.h5AudioControls.changeButtonSize(val);
+    },
+    iconSize(val) {
+      this.h5AudioControls.changeIconSize(val);
+    }
+  },
   mounted() {
     const { parentNode } = this.$el;
     this.h5AudioControls = h5AudioControls(this.src, {
