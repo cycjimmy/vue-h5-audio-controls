@@ -1,6 +1,6 @@
 {
   "name": "@cycjimmy/vue-h5-audio-controls",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple h5 music controller for vue",
   "main": "dist/h5-audio-controls.cjs.js",
   "module": "dist/h5-audio-controls.esm.js",

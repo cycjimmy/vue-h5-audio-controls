@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.1...v1.0.2) (2019-11-22)
+
+
+### Bug Fixes
+
+* **dynamical:** support for dynamically modifying the value of configuration properties ([3188f73](https://github.com/cycjimmy/vue-h5-audio-controls/commit/3188f73a5a2e0f9f14ca9b587c9ba1c4ca26b7df))
+
 ## [1.0.1](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.0...v1.0.1) (2019-11-21)
 
 
