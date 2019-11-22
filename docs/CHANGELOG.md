@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.2...v1.0.3) (2019-11-22)
+
+
+### Performance Improvements
+
+* use @cycjimmy/h5-audio-controls@3.3.0 to optimize multi-configuration property changes ([00f033c](https://github.com/cycjimmy/vue-h5-audio-controls/commit/00f033c024d36865e5717432a59f1710cb8ba4e1))
+
 ## [1.0.2](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.1...v1.0.2) (2019-11-22)
 
 
