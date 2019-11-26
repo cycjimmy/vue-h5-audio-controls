@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.4...v1.0.5) (2019-11-26)
+
+
+### Performance Improvements
+
+* **position:** use @cycjimmy//h5-audio-controls@3.3.2 for fixed position ([e97037b](https://github.com/cycjimmy/vue-h5-audio-controls/commit/e97037bd3a8c49888e114b82d88286eb3b707205))
+
 ## [1.0.4](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.3...v1.0.4) (2019-11-22)
 
 
