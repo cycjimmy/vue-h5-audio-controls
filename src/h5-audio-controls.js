@@ -2,9 +2,16 @@ import h5AudioControls from '@cycjimmy/h5-audio-controls';
 
 export default {
   name: 'h5-audio-controls',
-  template: ``,
+  template: `<div :style="containerStyle"></div>`,
   data() {
-    return {};
+    return {
+      containerStyle: {
+        position: 'absolute',
+        zIndex: 999,
+        width: 0,
+        height: 0
+      }
+    };
   },
   props: {
     src: String,
@@ -18,7 +25,6 @@ export default {
       default: true
     }
   },
-  render() {},
   methods: {
     play() {
       this.h5AudioControls.play();
@@ -60,9 +66,8 @@ export default {
     }
   },
   mounted() {
-    const { parentNode } = this.$el;
     this.h5AudioControls = h5AudioControls(this.src, {
-      context: parentNode,
+      context: this.$el,
       position: this.position,
       buttonSize: this.buttonSize,
       iconSize: this.iconSize,

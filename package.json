@@ -40,21 +40,21 @@
     "access": "public"
   },
   "dependencies": {
-    "@cycjimmy/h5-audio-controls": "3.3.0"
+    "@cycjimmy/h5-audio-controls": "3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
     "@cycjimmy/awesome-js-funcs": "^2.1.0",
     "@cycjimmy/config-lib": "^1.5.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-jest": "^24.9.0",
-    "coveralls": "^3.0.7",
+    "coveralls": "^3.0.8",
     "cross-env": "^6.0.3",
-    "eslint": "^6.6.0",
+    "eslint": "^6.7.1",
     "eslint-config-rollup": "^0.1.0",
     "jest": "^24.9.0",
-    "rollup": "^1.27.2",
+    "rollup": "^1.27.5",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-browsersync": "^1.0.0",
     "rollup-plugin-commonjs": "^10.1.0",
