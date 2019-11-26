@@ -12,9 +12,9 @@
 [![npm license][license-image]][download-url]
 
 * 简易的Vue版H5音乐控制器. [Demo][github-pages-url]. 
-* 该插件将 [@cycjimmy/h5-audio-controls](https://github.com/cycjimmy/h5-audio-controls) 扩展到为支持vue@2. 它的渲染模式仍是DOM.
+* 该插件将 [@cycjimmy/h5-audio-controls][h5-audio-controls-url] 扩展到为支持vue@2. 它的渲染模式仍是DOM. [![h5 audio controls image][h5-audio-controls-image]][h5-audio-controls-url]
 
-[English][Readme-url-En] | [中文][Readme-url-ZhCN]
+语言: [En][Readme-url-En] | [中文][Readme-url-ZhCN]
 ***
 
 ## 如何使用
@@ -182,6 +182,9 @@ Vue.use(H5AudioControls);
 
 [vue-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/dev/vue
 [vue-url]: https://github.com/vuejs/vue
+
+[h5-audio-controls-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/@cycjimmy/h5-audio-controls
+[h5-audio-controls-url]: https://github.com/cycjimmy/h5-audio-controls
 
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release

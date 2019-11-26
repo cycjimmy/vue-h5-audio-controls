@@ -12,9 +12,9 @@
 [![npm license][license-image]][download-url]
 
 * Simple h5 music controller for vue. [Demo][github-pages-url]. 
-* This plugin extends [@cycjimmy/h5-audio-controls](https://github.com/cycjimmy/h5-audio-controls) to support vue@2. Its rendering mode is still DOM.
+* This plugin extends [@cycjimmy/h5-audio-controls][h5-audio-controls-url] to support vue@2. Its rendering mode is still DOM. [![h5 audio controls image][h5-audio-controls-image]][h5-audio-controls-url]
 
-[English][Readme-url-En] | [中文][Readme-url-ZhCN]
+Language: [En][Readme-url-En] | [中文][Readme-url-ZhCN]
 ***
 
 ## How to use
@@ -182,6 +182,9 @@ To use via a CDN include this in your html:
 
 [vue-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/dev/vue
 [vue-url]: https://github.com/vuejs/vue
+
+[h5-audio-controls-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/@cycjimmy/h5-audio-controls
+[h5-audio-controls-url]: https://github.com/cycjimmy/h5-audio-controls
 
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
