@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <link rel="shortcut icon" href="./favicon.ico">
+  <link rel="preload" href="https://cycjimmy.github.io/staticFiles/images/icons/icon-play1.svg" as="image">
+  <link rel="preload" href="https://cycjimmy.github.io/staticFiles/images/icons/icon-play2.svg" as="image">
+  <link rel="preload" href="https://cycjimmy.github.io/staticFiles/images/icons/icon-pause1.svg" as="image">
+  <link rel="preload" href="https://cycjimmy.github.io/staticFiles/images/icons/icon-pause2.svg" as="image">
+
   <title>H5 Audio Controls for Vue</title>
 
   <style>
@@ -17,22 +22,52 @@
     }
 
     body {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+
       background-color: #0a4f56;
     }
 
-    .app-wrapper {
-      height: 100%;
+    .wrapper {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -ms-flex-pack: distribute;
+      justify-content: space-around;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+      padding: 40px;
     }
 
     .buttons-wrapper {
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      padding: 60px 40px 0;
+      width: 80vw;
     }
 
     .button {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
       flex: 1;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
       justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
       align-items: center;
       height: 30px;
       margin: 0 5px;
@@ -55,11 +90,22 @@
     'https://cycjimmy.github.io/staticFiles/media/Richard_Clayderman-LOVE_IS_BLUE.mp3',
     'https://cycjimmy.github.io/staticFiles/media/Richard_Clayderman-Secget_Garden.mp3'
   ];
+  const aPosition = ['left-top', 'top-right', 'right-bottom', 'left-bottom'];
+  const aButtonSize = ['16vw', '12vw'];
+  const aIconSize = ['10vw', '7vw'];
+  const aPlayIconSrc = [
+    'https://cycjimmy.github.io/staticFiles/images/icons/icon-play1.svg',
+    'https://cycjimmy.github.io/staticFiles/images/icons/icon-play2.svg'
+  ];
+  const aPauseIconSrc = [
+    'https://cycjimmy.github.io/staticFiles/images/icons/icon-pause1.svg',
+    'https://cycjimmy.github.io/staticFiles/images/icons/icon-pause2.svg'
+  ];
 
   new Vue({
     el: '#app',
     template: `
-    <div class="app-wrapper">
+    <div class="wrapper">
       <div class="buttons-wrapper">
         <a href="javascript:" class="button" @click="play">play</a>
         <a href="javascript:" class="button" @click="pause">pause</a>
@@ -83,21 +129,37 @@
         <a href="javascript:" class="button" @click="changeIconSize">changeIconSize</a>
       </div>
 
+      <div class="buttons-wrapper">
+        <a href="javascript:" class="button" @click="changePlayIcon">changePlayIcon</a>
+      </div>
+
+      <div class="buttons-wrapper">
+        <a href="javascript:" class="button" @click="changePauseIcon">changePauseIcon</a>
+      </div>
+
+      <div class="buttons-wrapper">
+        <a href="javascript:" class="button" @click="changeAll">changeAll</a>
+      </div>
+
       <h5-audio-controls
         ref="h5AudioControls"
         :src="audioControlsConfig.src"
         :position="audioControlsConfig.position"
         :buttonSize="audioControlsConfig.buttonSize"
         :iconSize="audioControlsConfig.iconSize"
+        :playIcon="audioControlsConfig.playIcon"
+        :pauseIcon="audioControlsConfig.pauseIcon"
       />
     </div>`,
     data() {
       return {
         audioControlsConfig: {
           src: aAudioSrc[0],
-          position: 'left-top',
-          buttonSize: '16vw',
-          iconSize: '10vw'
+          position: aPosition[0],
+          buttonSize: aButtonSize[0],
+          iconSize: aIconSize[0],
+          playIcon: aPlayIconSrc[0],
+          pauseIcon: aPlayIconSrc[0],
         }
       }
     },
@@ -131,44 +193,76 @@
       },
       changePosition() {
         switch (this.audioControlsConfig.position) {
-          case 'left-top':
-            this.audioControlsConfig.position = 'top-right';
+          case aPosition[0]:
+            this.audioControlsConfig.position = aPosition[1];
             break;
-          case 'top-right':
-            this.audioControlsConfig.position = 'right-bottom';
+          case aPosition[1]:
+            this.audioControlsConfig.position = aPosition[2];
             break;
-          case 'right-bottom':
-            this.audioControlsConfig.position = 'left-bottom';
+          case aPosition[2]:
+            this.audioControlsConfig.position = aPosition[3];
             break;
-          case 'left-bottom':
-            this.audioControlsConfig.position = 'left-top';
+          case aPosition[3]:
+            this.audioControlsConfig.position = aPosition[0];
             break;
         }
       },
       changeButtonSize() {
         switch (this.audioControlsConfig.buttonSize) {
-          case '12vw':
-            this.audioControlsConfig.buttonSize = '16vw';
+          case aButtonSize[0]:
+            this.audioControlsConfig.buttonSize = aButtonSize[1];
             break;
-          case '16vw':
-            this.audioControlsConfig.buttonSize = '12vw';
+          case aButtonSize[1]:
+            this.audioControlsConfig.buttonSize = aButtonSize[0];
             break;
           default:
-            this.audioControlsConfig.buttonSize = '12vw';
+            this.audioControlsConfig.buttonSize = aButtonSize[0];
         }
       },
       changeIconSize() {
         switch (this.audioControlsConfig.iconSize) {
-          case '10vw':
-            this.audioControlsConfig.iconSize = '7vw';
+          case aIconSize[0]:
+            this.audioControlsConfig.iconSize = aIconSize[1];
             break;
-          case '7vw':
-            this.audioControlsConfig.iconSize = '10vw';
+          case aIconSize[1]:
+            this.audioControlsConfig.iconSize = aIconSize[0];
             break;
           default:
-            this.audioControlsConfig.iconSize = '7vw';
+            this.audioControlsConfig.iconSize = aIconSize[0];
         }
       },
+      changePlayIcon() {
+        switch (this.audioControlsConfig.playIcon) {
+          case aPlayIconSrc[0]:
+            this.audioControlsConfig.playIcon = aPlayIconSrc[1];
+            break;
+          case aPlayIconSrc[1]:
+            this.audioControlsConfig.playIcon = aPlayIconSrc[0];
+            break;
+          default:
+            this.audioControlsConfig.playIcon = aPlayIconSrc[0];
+        }
+      },
+      changePauseIcon() {
+        switch (this.audioControlsConfig.pauseIcon) {
+          case aPauseIconSrc[0]:
+            this.audioControlsConfig.pauseIcon = aPauseIconSrc[1];
+            break;
+          case aPauseIconSrc[1]:
+            this.audioControlsConfig.pauseIcon = aPauseIconSrc[0];
+            break;
+          default:
+            this.audioControlsConfig.pauseIcon = aPauseIconSrc[0];
+        }
+      },
+      changeAll() {
+        this.changeAudioSrc();
+        this.changePosition();
+        this.changeButtonSize();
+        this.changeIconSize();
+        this.changePlayIcon();
+        this.changePauseIcon();
+      }
     }
   });
 </script>
