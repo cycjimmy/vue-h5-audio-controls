@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.5...v1.0.6) (2019-12-03)
+
+
+### Bug Fixes
+
+* **dependence:** upgrade h5-audio-controls to fix AudioButton state missing when autoplay on ios13 ([4c1c025](https://github.com/cycjimmy/vue-h5-audio-controls/commit/4c1c025586c52e19d1dd71e2ea62a23a02aee34b))
+
 ## [1.0.5](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.4...v1.0.5) (2019-11-26)
 
 
