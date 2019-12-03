@@ -40,7 +40,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@cycjimmy/h5-audio-controls": "3.3.2"
+    "@cycjimmy/h5-audio-controls": "3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
@@ -49,14 +49,14 @@
     "@cycjimmy/config-lib": "^1.5.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-jest": "^24.9.0",
-    "coveralls": "^3.0.8",
+    "coveralls": "^3.0.9",
     "cross-env": "^6.0.3",
-    "eslint": "^6.7.1",
+    "eslint": "^6.7.2",
     "eslint-config-rollup": "^0.1.0",
     "jest": "^24.9.0",
-    "rollup": "^1.27.5",
+    "rollup": "^1.27.8",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-browsersync": "^1.0.0",
+    "rollup-plugin-browsersync": "^1.1.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.1.0",
     "rollup-plugin-eslint": "^7.0.0",
