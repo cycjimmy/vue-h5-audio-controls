@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.6...v1.1.0) (2020-11-05)
+
+
+### Features
+
+* add positionType parameter ([4a47c3e](https://github.com/cycjimmy/vue-h5-audio-controls/commit/4a47c3e77dabbd20a4b3a295d1e1f90eead48e92))
+
 ## [1.0.6](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.5...v1.0.6) (2019-12-03)
 
 
