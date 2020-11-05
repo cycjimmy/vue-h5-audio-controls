@@ -59,6 +59,13 @@ Vue.use(H5AudioControls);
       * `'top-right'`(默认)
       * `'right-bottom'`
       * `'left-bottom'`
+  * `positionType`: [可选][string] 设定控制器的定位类型.
+    * 选择以下五个选项之一:
+      * `'fixed'`(默认)
+      * `'absolute'`
+      * `'relative'`
+      * `'sticky'`
+      * `'static'`
   * `buttonSize`: [可选][string|number] 设置按钮包裹层的尺寸.
   * `iconSize`: [可选][string|number] 设置按钮图标的尺寸.
   * `playIcon`: [可选][string] 设置播放图标.

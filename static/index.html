@@ -145,6 +145,7 @@
         ref="h5AudioControls"
         :src="audioControlsConfig.src"
         :position="audioControlsConfig.position"
+        :positionType="audioControlsConfig.positionType"
         :buttonSize="audioControlsConfig.buttonSize"
         :iconSize="audioControlsConfig.iconSize"
         :playIcon="audioControlsConfig.playIcon"
@@ -156,6 +157,7 @@
         audioControlsConfig: {
           src: aAudioSrc[0],
           position: aPosition[0],
+          positionType: 'fixed',
           buttonSize: aButtonSize[0],
           iconSize: aIconSize[0],
           playIcon: aPlayIconSrc[0],

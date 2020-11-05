@@ -6,8 +6,6 @@ export default {
   data() {
     return {
       containerStyle: {
-        position: 'absolute',
-        zIndex: 999,
         width: 0,
         height: 0
       }
@@ -16,6 +14,7 @@ export default {
   props: {
     src: String,
     position: String,
+    positionType: String,
     buttonSize: [String, Number],
     iconSize: [String, Number],
     playIcon: String,
@@ -69,6 +68,7 @@ export default {
     this.h5AudioControls = h5AudioControls(this.src, {
       context: this.$el,
       position: this.position,
+      positionType: this.positionType,
       buttonSize: this.buttonSize,
       iconSize: this.iconSize,
       playIcon: this.playIcon,
