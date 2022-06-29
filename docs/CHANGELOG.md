@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.1.0...v1.2.0) (2022-06-29)
+
+
+### Features
+
+* refactor build tasks and upgrade dependencies ([4e74573](https://github.com/cycjimmy/vue-h5-audio-controls/commit/4e7457363a33edb2c5edc139dc18f78fe3bca04e))
+
 # [1.1.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.0.6...v1.1.0) (2020-11-05)
 
 
