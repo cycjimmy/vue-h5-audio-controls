@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+      - main
+      - next
+      - next-major
+      - alpha
+      - beta
 
 jobs:
   test:
@@ -11,18 +16,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 12
+          node-version: '16'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Test
-        run: npm run test
+      - run: npm run test
+      - run: npm run package
 
   release:
     name: release
@@ -30,16 +35,39 @@ jobs:
     needs: test
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Build package
+        run: npm run package
+
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
-          branch: master
+          branches: |
+            [
+              '+([0-9])?(.{+([0-9]),x}).x',
+              'master',
+              'main',
+              'next',
+              'next-major',
+              {
+                name: 'beta',
+                prerelease: true
+              },
+              {
+                name: 'alpha',
+                prerelease: true
+              }
+            ]
           extra_plugins: |
             @semantic-release/git
             @semantic-release/changelog
@@ -49,16 +77,15 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Setup Node.js with GitHub Package Registry
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 12
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 16
           registry-url: 'https://npm.pkg.github.com'
           scope: 'cycjimmy'
 
       - name: Publish To GitHub Package Registry
         if: steps.semantic.outputs.new_release_published == 'true'
-        run: npm publish
+        run: npm publish ./.release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
