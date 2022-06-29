@@ -2,14 +2,38 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.H5AudioControls = factory());
-}(this, (function () { 'use strict';
+})(this, (function () { 'use strict';
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+      writable: false
+    });
+    return Constructor;
+  }
 
   function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
       o.__proto__ = p;
       return o;
     };
-
     return _setPrototypeOf(o, p);
   }
 
@@ -19,7 +43,7 @@
     if (typeof Proxy === "function") return true;
 
     try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
       return true;
     } catch (e) {
       return false;
@@ -28,7 +52,7 @@
 
   function _construct(Parent, args, Class) {
     if (_isNativeReflectConstruct()) {
-      _construct = Reflect.construct;
+      _construct = Reflect.construct.bind();
     } else {
       _construct = function _construct(Parent, args, Class) {
         var a = [null];
@@ -43,132 +67,129 @@
     return _construct.apply(null, arguments);
   }
 
-  function getDefaultExportFromCjs(x) {
-    return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
 
-  function createCommonjsModule(fn, basedir, module) {
-    return module = {
-      path: basedir,
-      exports: {},
-      require: function (path, base) {
-        return commonjsRequire(path, base === undefined || base === null ? module.path : base);
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+    if (_i == null) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+
+    var _s, _e;
+
+    try {
+      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
       }
-    }, fn(module, module.exports), module.exports;
-  }
-
-  function commonjsRequire() {
-    throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-  }
-
-  var CreateInstance = createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    /**
-     * singleton constructor(design patterns)
-     * @returns {function(*=)}
-     * @constructor
-     */
-
-    var _default = function _default() {
-      var instance;
-      return function (newInstance) {
-        if (newInstance) {
-          instance = newInstance;
-        }
-
-        return instance;
-      };
-    };
-
-    exports["default"] = _default;
-  });
-  var CreateInstance$1 = /*@__PURE__*/getDefaultExportFromCjs(CreateInstance);
-  var isString = createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    /**
-     * determine a string type
-     * @param str
-     * @returns {boolean}
-     */
-
-    var _default = function _default(str) {
-      return typeof str === 'string' && str.constructor === String;
-    };
-
-    exports["default"] = _default;
-  });
-  var isString$1 = /*@__PURE__*/getDefaultExportFromCjs(isString);
-  var isPromise = createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    /**
-     * determine a promise type
-     * @param promise
-     * @returns {boolean}
-     */
-
-    var _default = function _default(promise) {
-      return Object.prototype.toString.call(promise).slice(8, -1) === 'Promise';
-    };
-
-    exports["default"] = _default;
-  });
-  var functionToPromise = createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-
-    var _isPromise = _interopRequireDefault(isPromise);
-
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {
-        "default": obj
-      };
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
     }
-    /**
-     * function to promise
-     * @param normalFunction
-     * @param timeout
-     * @returns {Promise<any>}
-     */
+
+    return _arr;
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  /**
+   * singleton constructor(design patterns)
+   * @returns {function(*=)}
+   * @constructor
+   */
 
 
-    var _default = function _default(normalFunction) {
-      var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var CreateInstance = () => {
+    var instance;
+    return newInstance => {
+      if (newInstance) {
+        instance = newInstance;
+      }
 
-      if ((0, _isPromise["default"])(normalFunction)) {
-        return normalFunction;
-      } // eslint-disable-next-line no-undef
-
-
-      return new Promise(function (resolve) {
-        normalFunction();
-        setTimeout(resolve, timeout);
-      });
+      return instance;
     };
+  };
+  /**
+   * determine a string type
+   * @param str
+   * @returns {boolean}
+   */
 
-    exports["default"] = _default;
-  });
-  var functionToPromise$1 = /*@__PURE__*/getDefaultExportFromCjs(functionToPromise);
+
+  var isString = str => typeof str === 'string' && str.constructor === String;
+  /**
+   * determine a promise type
+   * @param promise
+   * @returns {boolean}
+   */
+
+
+  var isPromise = promise => Object.prototype.toString.call(promise).slice(8, -1) === 'Promise';
+  /**
+   * function to promise
+   * @param normalFunction
+   * @param timeout
+   * @returns {Promise<any>}
+   */
+
+
+  var functionToPromise = function (normalFunction) {
+    var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    if (isPromise(normalFunction)) {
+      return normalFunction;
+    } // eslint-disable-next-line no-undef
+
+
+    return new Promise(resolve => {
+      normalFunction();
+      setTimeout(resolve, timeout);
+    });
+  };
   /**
    * isLegalConfigKey
    * @param key
    * @returns {boolean}
    */
 
+
   var isLegalConfigKey = function isLegalConfigKey(key) {
     var configKeys = ['audioSrc', 'position', 'buttonSize', 'iconSize', 'playIcon', 'pauseIcon', 'autoPlay'];
 
-    for (var i = 0; i < configKeys.length; i++) {
+    for (var i = 0; i < configKeys.length; i += 1) {
       if (key === configKeys[i]) {
         return true;
       }
@@ -185,11 +206,13 @@
 
 
   var audioButtonNeedChange = function audioButtonNeedChange(_ref) {
-    var config = _ref[0],
-        audioButtonConfig = _ref[1];
+    var _ref2 = _slicedToArray(_ref, 2),
+        config = _ref2[0],
+        audioButtonConfig = _ref2[1];
+
     var configKeys = ['position', 'buttonSize', 'iconSize', 'playIcon', 'pauseIcon'];
 
-    for (var i = 0; i < configKeys.length; i++) {
+    for (var i = 0; i < configKeys.length; i += 1) {
       if (config[configKeys[i]] !== audioButtonConfig[configKeys[i]]) {
         return true;
       }
@@ -197,32 +220,24 @@
 
     return false;
   };
+  /**
+   * isAudioPlaying
+   * @param audio
+   */
 
-  var isAudioPlaying = createCommonjsModule(function (module, exports) {
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports["default"] = void 0;
-    /**
-     * isAudioPlaying
-     * @param audio
-     */
 
-    var _default = function _default(audio) {
-      return !audio.paused;
-    };
+  var isAudioPlaying = audio => !audio.paused;
 
-    exports["default"] = _default;
-  });
-  var isAudioPlaying$1 = /*@__PURE__*/getDefaultExportFromCjs(isAudioPlaying);
-
-  var _default = /*#__PURE__*/function () {
+  var _default$2 = /*#__PURE__*/function () {
     /**
      * Audio
      * @param audioSrc
      */
     function _default(_ref) {
       var audioSrc = _ref.audioSrc;
+
+      _classCallCheck(this, _default);
+
       this.config = {
         audioSrc: audioSrc
       };
@@ -236,91 +251,98 @@
      */
 
 
-    var _proto = _default.prototype;
-
-    _proto.getAudio = function getAudio() {
-      return this.audio;
-    }
-    /**
-     * play
-     * @returns {HTMLAudioElement}
-     */
-    ;
-
-    _proto.play = function play() {
-      var _this = this;
-
-      var wxFakePlay = function wxFakePlay() {
-        return window.WeixinJSBridge.invoke('getNetworkType', {}, function () {
-          return _this.audio.play();
-        }, false);
-      };
-
-      if (window.WeixinJSBridge) {
-        wxFakePlay();
-      } else {
-        document.addEventListener('WeixinJSBridgeReady', function () {
-          return _this.audio.play();
-        }, false);
+    _createClass(_default, [{
+      key: "getAudio",
+      value: function getAudio() {
+        return this.audio;
       }
+      /**
+       * play
+       * @returns {HTMLAudioElement}
+       */
 
-      this.audio.play();
-      return this.audio;
-    }
-    /**
-     * pause
-     * @returns {HTMLAudioElement}
-     */
-    ;
+    }, {
+      key: "play",
+      value: function play() {
+        var _this = this;
 
-    _proto.pause = function pause() {
-      this.audio.pause();
-      return this.audio;
-    }
-    /**
-     * stop
-     * @returns {HTMLAudioElement}
-     */
-    ;
+        var wxFakePlay = function wxFakePlay() {
+          return window.WeixinJSBridge.invoke('getNetworkType', {}, function () {
+            return _this.audio.play();
+          }, false);
+        };
 
-    _proto.stop = function stop() {
-      this.audio.currentTime = 0;
-      this.audio.pause();
-      return this.audio;
-    }
-    /**
-     * isPlaying
-     * @returns {boolean}
-     */
-    ;
+        if (window.WeixinJSBridge) {
+          wxFakePlay();
+        } else {
+          document.addEventListener('WeixinJSBridgeReady', function () {
+            return _this.audio.play();
+          }, false);
+        }
 
-    _proto.isPlaying = function isPlaying() {
-      return isAudioPlaying$1(this.audio);
-    }
-    /**
-     * canplay
-     * @returns {Promise<>}
-     */
-    ;
+        this.audio.play();
+        return this.audio;
+      }
+      /**
+       * pause
+       * @returns {HTMLAudioElement}
+       */
 
-    _proto.canplay = function canplay() {
-      var _this2 = this;
+    }, {
+      key: "pause",
+      value: function pause() {
+        this.audio.pause();
+        return this.audio;
+      }
+      /**
+       * stop
+       * @returns {HTMLAudioElement}
+       */
 
-      return new Promise(function (resolve) {
-        _this2.audio.addEventListener('canplay', resolve);
-      });
-    }
-    /**
-     * init
-     * @private
-     */
-    ;
+    }, {
+      key: "stop",
+      value: function stop() {
+        this.audio.currentTime = 0;
+        this.audio.pause();
+        return this.audio;
+      }
+      /**
+       * isPlaying
+       * @returns {boolean}
+       */
 
-    _proto._init = function _init() {
-      this.audio.src = this.config.audioSrc;
-      this.audio.preload = 'auto';
-      this.audio.loop = true;
-    };
+    }, {
+      key: "isPlaying",
+      value: function isPlaying() {
+        return isAudioPlaying(this.audio);
+      }
+      /**
+       * canplay
+       * @returns {Promise<>}
+       */
+
+    }, {
+      key: "canplay",
+      value: function canplay() {
+        var _this2 = this;
+
+        return new Promise(function (resolve) {
+          _this2.audio.addEventListener('canplay', resolve);
+        });
+      }
+      /**
+       * init
+       * @private
+       */
+
+    }, {
+      key: "_init",
+      value: function _init() {
+        this.audio.src = this.config.audioSrc;
+        this.audio.preload = 'auto';
+        this.audio.loop = true;
+      }
+    }]);
 
     return _default;
   }();
@@ -354,12 +376,12 @@
     }
   }
 
-  var css_248z = "._2uIf16wCx_{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;position:fixed;z-index:999;max-width:60px;max-height:60px;width:15vw;height:15vw;-webkit-tap-highlight-color:rgba(255,0,0,0);outline:none;border:none;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer}._2uIf16wCx_.left-top{left:0;top:0}._2uIf16wCx_.top-right{top:0;right:0}._2uIf16wCx_.right-bottom{right:0;bottom:0}._2uIf16wCx_.left-bottom{left:0;bottom:0}@-webkit-keyframes _265-UMQKXM{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}@keyframes _265-UMQKXM{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}._13F2sLCP2q,.rC6KPfM7Ll{display:block;width:60%;height:60%}.rC6KPfM7Ll{background:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cstyle%3E.st1{fill-rule:evenodd;clip-rule:evenodd;fill:%23fff}%3C/style%3E%3Cpath d='M32 2.8C15.9 2.8 2.8 15.9 2.8 32S15.9 61.2 32 61.2 61.2 48.1 61.2 32 48.1 2.8 32 2.8z' opacity='.2' fill-rule='evenodd' clip-rule='evenodd'/%3E%3Cpath class='st1' d='M32 0C14.3 0 0 14.3 0 32s14.3 32 32 32 32-14.3 32-32S49.7 0 32 0zm0 61.2C15.9 61.2 2.8 48.1 2.8 32S15.9 2.8 32 2.8 61.2 15.9 61.2 32 48.1 61.2 32 61.2z'/%3E%3Cpath class='st1' d='M30.3 11.2l-2.1.6L36.1 39c-5.6-.8-10.5 4-10.1 8.7.1 1.6 1.3 2.9 2 3.5 4 3.4 9.4-.2 11.3-5.7.8-2.3.4-4-.8-8.1l-4.9-16.9c2.5-.8 7.7 1 9.4 3.5 1.1 1.6 1.8 3.9 1.4 5.8-.1.5-.4 2 0 1.7.7-.6.9-1.2 1.3-2.4.3-1.1.4-2.7.3-3.7-1.6-10-12.7-7.1-15.7-14.2z'/%3E%3C/svg%3E\") 0 0 no-repeat;background-size:100% 100%;-webkit-animation:_265-UMQKXM 2s linear infinite;animation:_265-UMQKXM 2s linear infinite}._13F2sLCP2q{background:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 2.8C15.9 2.8 2.8 15.9 2.8 32S15.9 61.2 32 61.2 61.2 48.1 61.2 32 48.1 2.8 32 2.8z' opacity='.2' fill-rule='evenodd' clip-rule='evenodd'/%3E%3Cpath d='M32 0C14.3 0 0 14.3 0 32s14.3 32 32 32 32-14.3 32-32S49.7 0 32 0zM2.8 32C2.8 15.9 15.9 2.8 32 2.8c7.7 0 14.6 3 19.9 7.8L10.6 51.9C5.7 46.6 2.8 39.7 2.8 32zM32 61.2c-7.7 0-14.6-3-19.9-7.8l41.3-41.3c4.8 5.2 7.8 12.2 7.8 19.9 0 16.1-13.1 29.2-29.2 29.2z' fill='%23fff'/%3E%3Cpath d='M30.3 11.2l-2.1.6L36.1 39c-5.6-.8-10.5 4-10.1 8.7.1 1.6 1.3 2.9 2 3.5 4 3.4 9.4-.2 11.3-5.7.8-2.3.4-4-.8-8.1l-4.9-16.9c2.5-.8 7.7 1 9.4 3.5 1.1 1.6 1.8 3.9 1.4 5.8-.1.5-.4 2 0 1.7.7-.6.9-1.2 1.3-2.4.3-1.1.4-2.7.3-3.7-1.6-10-12.7-7.1-15.7-14.2z' fill-rule='evenodd' clip-rule='evenodd' fill='%23fff'/%3E%3C/svg%3E\") 0 0 no-repeat;background-size:100% 100%}";
+  var css_248z = ".YY7FU9uLKr{-ms-flex-pack:center;-ms-flex-align:center;-webkit-tap-highlight-color:rgba(255,0,0,0);-webkit-align-items:center;align-items:center;border:none;cursor:pointer;display:-webkit-flex;display:-ms-flexbox;display:flex;height:15vw;-webkit-justify-content:center;justify-content:center;max-height:60px;max-width:60px;outline:none;position:fixed;-ms-touch-action:manipulation;touch-action:manipulation;width:15vw;z-index:999}.YY7FU9uLKr.left-top{left:0;top:0}.YY7FU9uLKr.top-right{right:0;top:0}.YY7FU9uLKr.right-bottom{bottom:0;right:0}.YY7FU9uLKr.left-bottom{bottom:0;left:0}@-webkit-keyframes _0-YdR1QUOM{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}@keyframes _0-YdR1QUOM{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(-1turn);transform:rotate(-1turn)}}.J57gYboR-w,.PDTV9-opA4{display:block;height:60%;width:60%}.J57gYboR-w{-webkit-animation:_0-YdR1QUOM 2s linear infinite;animation:_0-YdR1QUOM 2s linear infinite;background:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cstyle%3E.st1{fill-rule:evenodd;clip-rule:evenodd;fill:%23fff}%3C/style%3E%3Cpath d='M32 2.8C15.9 2.8 2.8 15.9 2.8 32S15.9 61.2 32 61.2 61.2 48.1 61.2 32 48.1 2.8 32 2.8z' opacity='.2' fill-rule='evenodd' clip-rule='evenodd'/%3E%3Cpath class='st1' d='M32 0C14.3 0 0 14.3 0 32s14.3 32 32 32 32-14.3 32-32S49.7 0 32 0zm0 61.2C15.9 61.2 2.8 48.1 2.8 32S15.9 2.8 32 2.8 61.2 15.9 61.2 32 48.1 61.2 32 61.2z'/%3E%3Cpath class='st1' d='m30.3 11.2-2.1.6L36.1 39c-5.6-.8-10.5 4-10.1 8.7.1 1.6 1.3 2.9 2 3.5 4 3.4 9.4-.2 11.3-5.7.8-2.3.4-4-.8-8.1l-4.9-16.9c2.5-.8 7.7 1 9.4 3.5 1.1 1.6 1.8 3.9 1.4 5.8-.1.5-.4 2 0 1.7.7-.6.9-1.2 1.3-2.4.3-1.1.4-2.7.3-3.7-1.6-10-12.7-7.1-15.7-14.2z'/%3E%3C/svg%3E\") 0 0 no-repeat;background-size:100% 100%}.PDTV9-opA4{background:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 2.8C15.9 2.8 2.8 15.9 2.8 32S15.9 61.2 32 61.2 61.2 48.1 61.2 32 48.1 2.8 32 2.8z' opacity='.2' fill-rule='evenodd' clip-rule='evenodd'/%3E%3Cpath d='M32 0C14.3 0 0 14.3 0 32s14.3 32 32 32 32-14.3 32-32S49.7 0 32 0zM2.8 32C2.8 15.9 15.9 2.8 32 2.8c7.7 0 14.6 3 19.9 7.8L10.6 51.9C5.7 46.6 2.8 39.7 2.8 32zM32 61.2c-7.7 0-14.6-3-19.9-7.8l41.3-41.3c4.8 5.2 7.8 12.2 7.8 19.9 0 16.1-13.1 29.2-29.2 29.2z' fill='%23fff'/%3E%3Cpath d='m30.3 11.2-2.1.6L36.1 39c-5.6-.8-10.5 4-10.1 8.7.1 1.6 1.3 2.9 2 3.5 4 3.4 9.4-.2 11.3-5.7.8-2.3.4-4-.8-8.1l-4.9-16.9c2.5-.8 7.7 1 9.4 3.5 1.1 1.6 1.8 3.9 1.4 5.8-.1.5-.4 2 0 1.7.7-.6.9-1.2 1.3-2.4.3-1.1.4-2.7.3-3.7-1.6-10-12.7-7.1-15.7-14.2z' fill-rule='evenodd' clip-rule='evenodd' fill='%23fff'/%3E%3C/svg%3E\") 0 0 no-repeat;background-size:100% 100%}";
   var _style = {
-    "musicControlWrapper": "_2uIf16wCx_",
-    "playIcon": "rC6KPfM7Ll",
-    "pauseIcon": "_13F2sLCP2q",
-    "reverseRotataZ": "_265-UMQKXM"
+    "musicControlWrapper": "YY7FU9uLKr",
+    "playIcon": "J57gYboR-w",
+    "pauseIcon": "PDTV9-opA4",
+    "reverseRotataZ": "_0-YdR1QUOM"
   };
   styleInject(css_248z);
   /**
@@ -379,11 +401,11 @@
     icon.classList.add(className);
 
     if (iconUrl) {
-      cssText += "background-image: url(" + iconUrl + "); ";
+      cssText += "background-image: url(".concat(iconUrl, "); ");
     }
 
     if (size) {
-      cssText += "width: " + size + "; height: " + size;
+      cssText += "width: ".concat(size, "; height: ").concat(size);
     }
 
     icon.style.cssText = cssText;
@@ -449,6 +471,9 @@
           playIcon = _ref$playIcon === void 0 ? '' : _ref$playIcon,
           _ref$pauseIcon = _ref.pauseIcon,
           pauseIcon = _ref$pauseIcon === void 0 ? '' : _ref$pauseIcon;
+
+      _classCallCheck(this, _default);
+
       this.config = {
         buttonSize: buttonSize,
         position: position,
@@ -457,8 +482,8 @@
         playIcon: playIcon,
         pauseIcon: pauseIcon
       };
-      this.buttonSize = isString$1(this.config.buttonSize) ? this.config.buttonSize : this.config.buttonSize + "px";
-      this.iconSize = isString$1(this.config.iconSize) ? this.config.iconSize : this.config.iconSize + "px";
+      this.buttonSize = isString(this.config.buttonSize) ? this.config.buttonSize : "".concat(this.config.buttonSize, "px");
+      this.iconSize = isString(this.config.iconSize) ? this.config.iconSize : "".concat(this.config.iconSize, "px");
       this.audioButton = document.createElement('a');
       this.playIcon = ePlayIcon({
         iconUrl: this.config.playIcon,
@@ -473,76 +498,89 @@
     }
     /**
      * getAudioButton
-     * @returns {HTMLAnchorElement | {changeUIToPlay(): void, _init(): void, getAudioButton(): *, changeUIToPause(): void}}
+     * @returns {
+     * HTMLAnchorElement |
+     *   {
+     *      changeUIToPlay(): void,
+     *      _init(): void,
+     *      getAudioButton(): *,
+     *      changeUIToPause(): void
+     *   }
+     * }
      */
 
 
-    var _proto = _default.prototype;
-
-    _proto.getAudioButton = function getAudioButton() {
-      return this.audioButton;
-    }
-    /**
-     * changeUIToPlay
-     */
-    ;
-
-    _proto.changeUIToPlay = function changeUIToPlay() {
-      if (this.audioButton.contains(this.pauseIcon)) {
-        this.audioButton.removeChild(this.pauseIcon);
+    _createClass(_default, [{
+      key: "getAudioButton",
+      value: function getAudioButton() {
+        return this.audioButton;
       }
+      /**
+       * changeUIToPlay
+       */
 
-      this.audioButton.appendChild(this.playIcon);
-    }
-    /**
-     * changeUIToPause
-     */
-    ;
+    }, {
+      key: "changeUIToPlay",
+      value: function changeUIToPlay() {
+        if (this.audioButton.contains(this.pauseIcon)) {
+          this.audioButton.removeChild(this.pauseIcon);
+        }
 
-    _proto.changeUIToPause = function changeUIToPause() {
-      if (this.audioButton.contains(this.playIcon)) {
-        this.audioButton.removeChild(this.playIcon);
+        this.audioButton.appendChild(this.playIcon);
       }
+      /**
+       * changeUIToPause
+       */
 
-      this.audioButton.appendChild(this.pauseIcon);
-    }
-    /**
-     * init
-     * @private
-     */
-    ;
+    }, {
+      key: "changeUIToPause",
+      value: function changeUIToPause() {
+        if (this.audioButton.contains(this.playIcon)) {
+          this.audioButton.removeChild(this.playIcon);
+        }
 
-    _proto._init = function _init() {
-      this.audioButton.classList.add(_style.musicControlWrapper, this.config.position); // Init Button Size
-
-      if (!this.buttonSize) {
-        var shortW = window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth;
-        this.buttonSize = shortW * 0.15 + "px";
+        this.audioButton.appendChild(this.pauseIcon);
       }
+      /**
+       * init
+       * @private
+       */
 
-      this.audioButton.style.cssText += "width: " + this.buttonSize + "; height: " + this.buttonSize;
+    }, {
+      key: "_init",
+      value: function _init() {
+        this.audioButton.classList.add(_style.musicControlWrapper, this.config.position); // Init Button Size
 
-      this._setPositionType();
+        if (!this.buttonSize) {
+          var shortW = window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth;
+          this.buttonSize = "".concat(shortW * 0.15, "px");
+        }
 
-      this.changeUIToPlay();
-    }
-    /**
-     * _setPositionType
-     * @private
-     */
-    ;
+        this.audioButton.style.cssText += "width: ".concat(this.buttonSize, "; height: ").concat(this.buttonSize);
 
-    _proto._setPositionType = function _setPositionType() {
-      // eslint-disable-next-line default-case
-      switch (this.config.positionType) {
-        // 'fixed' is default in style
-        case 'static':
-        case 'relative':
-        case 'absolute':
-        case 'sticky':
-          this.audioButton.style.position = this.config.positionType;
+        this._setPositionType();
+
+        this.changeUIToPlay();
       }
-    };
+      /**
+       * _setPositionType
+       * @private
+       */
+
+    }, {
+      key: "_setPositionType",
+      value: function _setPositionType() {
+        // eslint-disable-next-line default-case
+        switch (this.config.positionType) {
+          // 'fixed' is default in style
+          case 'static':
+          case 'relative':
+          case 'absolute':
+          case 'sticky':
+            this.audioButton.style.position = this.config.positionType;
+        }
+      }
+    }]);
 
     return _default;
   }();
@@ -559,7 +597,7 @@
    */
 
 
-  var _default$2 = /*#__PURE__*/function () {
+  var _default = /*#__PURE__*/function () {
     /**
      * H5AudioControls
      * @param audioSrc
@@ -572,8 +610,8 @@
      * @param pauseIcon
      * @param autoPlay default: true
      */
-    function _default$2(audioSrc, _temp) {
-      var _ref = _temp === void 0 ? {} : _temp,
+    function _default(audioSrc) {
+      var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
           _ref$context = _ref.context,
           context = _ref$context === void 0 ? document.body : _ref$context,
           _ref$position = _ref.position,
@@ -590,6 +628,8 @@
           pauseIcon = _ref$pauseIcon === void 0 ? '' : _ref$pauseIcon,
           _ref$autoPlay = _ref.autoPlay,
           autoPlay = _ref$autoPlay === void 0 ? true : _ref$autoPlay;
+
+      _classCallCheck(this, _default);
 
       this.config = {
         audioSrc: audioSrc,
@@ -614,304 +654,322 @@
      */
 
 
-    var _proto = _default$2.prototype;
-
-    _proto.setContext = function setContext(context) {
-      this.context = isString$1(context) ? document.querySelector(context) : context;
-      return this;
-    }
-    /**
-     * Load
-     * @returns {Promise<void>}
-     */
-    ;
-
-    _proto.load = function load() {
-      var _this = this;
-
-      return this.appendAudioButton().then(function () {
-        return functionToPromise$1(function () {
-          if (_this.config.autoPlay) {
-            _this.play();
-
-            _this.audioInstance.canplay().then(function () {
-              _this.changeButtonUI();
-            });
-          }
-        });
-      });
-    }
-    /**
-     * play
-     */
-    ;
-
-    _proto.play = function play() {
-      var _this2 = this;
-
-      this.audioInstance.play();
-      setTimeout(function () {
-        return _this2.changeButtonUI();
-      }, 0);
-    }
-    /**
-     * pause
-     */
-    ;
-
-    _proto.pause = function pause() {
-      var _this3 = this;
-
-      this.audioInstance.pause();
-      setTimeout(function () {
-        return _this3.changeButtonUI();
-      }, 0);
-    }
-    /**
-     * stop
-     */
-    ;
-
-    _proto.stop = function stop() {
-      var _this4 = this;
-
-      this.audioInstance.stop();
-      setTimeout(function () {
-        return _this4.changeButtonUI();
-      }, 0);
-    }
-    /**
-     * changeButtonUI
-     */
-    ;
-
-    _proto.changeButtonUI = function changeButtonUI() {
-      if (this.isPlaying()) {
-        this.audioButtonInstance.changeUIToPlay();
-      } else {
-        this.audioButtonInstance.changeUIToPause();
+    _createClass(_default, [{
+      key: "setContext",
+      value: function setContext(context) {
+        this.context = isString(context) ? document.querySelector(context) : context;
+        return this;
       }
-    }
-    /**
-     * dynamically change the value of configuration properties
-     * @param key
-     * @param val
-     * @returns {Promise<void>}
-     */
-    ;
+      /**
+       * Load
+       * @returns {Promise<void>}
+       */
 
-    _proto.change = function change(key, val) {
-      var _this5 = this;
+    }, {
+      key: "load",
+      value: function load() {
+        var _this = this;
 
-      if (!isLegalConfigKey(key)) {
-        return Promise.resolve();
-      }
+        return this.appendAudioButton().then(function () {
+          return functionToPromise(function () {
+            if (_this.config.autoPlay) {
+              _this.play();
 
-      if (typeof val === 'undefined') {
-        return Promise.resolve();
-      }
-
-      this.config[key] = val;
-
-      if (key === 'autoPlay') {
-        return Promise.resolve();
-      }
-
-      if (key === 'audioSrc') {
-        return Promise.resolve().then(function () {
-          return functionToPromise$1(function () {
-            _this5.stop();
-
-            _this5._initAudioInstance();
-          });
-        }).then(function () {
-          return functionToPromise$1(function () {
-            if (_this5.config.autoPlay) {
-              _this5.play();
+              _this.audioInstance.canplay().then(function () {
+                _this.changeButtonUI();
+              });
             }
           });
         });
       }
+      /**
+       * play
+       */
 
-      if (this.state.isAudioButtonChanging) {
-        return Promise.resolve().then(function () {
-          return functionToPromise$1(function () {}, 10);
-        }).then(function () {
-          return _this5.change(key, val);
-        });
+    }, {
+      key: "play",
+      value: function play() {
+        var _this2 = this;
+
+        this.audioInstance.play();
+        setTimeout(function () {
+          return _this2.changeButtonUI();
+        }, 0);
       }
+      /**
+       * pause
+       */
 
-      this.state.isAudioButtonChanging = true;
-      return Promise.resolve().then(function () {
-        if (!audioButtonNeedChange([_this5.config, _this5.audioButtonInstance.config])) {
-          _this5.state.isAudioButtonChanging = false;
+    }, {
+      key: "pause",
+      value: function pause() {
+        var _this3 = this;
+
+        this.audioInstance.pause();
+        setTimeout(function () {
+          return _this3.changeButtonUI();
+        }, 0);
+      }
+      /**
+       * stop
+       */
+
+    }, {
+      key: "stop",
+      value: function stop() {
+        var _this4 = this;
+
+        this.audioInstance.stop();
+        setTimeout(function () {
+          return _this4.changeButtonUI();
+        }, 0);
+      }
+      /**
+       * changeButtonUI
+       */
+
+    }, {
+      key: "changeButtonUI",
+      value: function changeButtonUI() {
+        if (this.isPlaying()) {
+          this.audioButtonInstance.changeUIToPlay();
+        } else {
+          this.audioButtonInstance.changeUIToPause();
+        }
+      }
+      /**
+       * dynamically change the value of configuration properties
+       * @param key
+       * @param val
+       * @returns {Promise<void>}
+       */
+
+    }, {
+      key: "change",
+      value: function change(key, val) {
+        var _this5 = this;
+
+        if (!isLegalConfigKey(key)) {
           return Promise.resolve();
         }
 
-        return Promise.resolve().then(function () {
-          return _this5.repaintAudioButton();
-        }).then(function () {
-          return functionToPromise$1(function () {
-            _this5.state.isAudioButtonChanging = false;
-          });
-        });
-      });
-    }
-    /**
-     * changeAudioSrc
-     * @param src
-     * @returns {Promise<void>}
-     */
-    ;
-
-    _proto.changeAudioSrc = function changeAudioSrc(src) {
-      return this.change('audioSrc', src);
-    }
-    /**
-     * changePosition
-     * @param position
-     * @returns {Promise<void>}
-     */
-    ;
-
-    _proto.changePosition = function changePosition(position) {
-      return this.change('position', position);
-    }
-    /**
-     * changeButtonSize
-     * @param size
-     * @returns {Promise<void>}
-     */
-    ;
-
-    _proto.changeButtonSize = function changeButtonSize(size) {
-      return this.change('buttonSize', size);
-    }
-    /**
-     * changeIconSize
-     * @param size
-     * @returns {Promise<void>}
-     */
-    ;
-
-    _proto.changeIconSize = function changeIconSize(size) {
-      return this.change('iconSize', size);
-    }
-    /**
-     * isPlaying
-     * @returns {boolean}
-     */
-    ;
-
-    _proto.isPlaying = function isPlaying() {
-      return this.audioInstance.isPlaying();
-    }
-    /**
-     * eventBind
-     */
-    ;
-
-    _proto.eventBind = function eventBind() {
-      var _this6 = this;
-
-      this.audioButtonInstance.getAudioButton().addEventListener('click', function (e) {
-        e.stopPropagation();
-
-        if (_this6.isPlaying()) {
-          _this6.pause();
-
-          return;
+        if (typeof val === 'undefined') {
+          return Promise.resolve();
         }
 
-        _this6.play();
-      });
-      return this;
-    }
-    /**
-     * Repaint AudioButton
-     * @returns {Promise<void>}
-     */
-    ;
+        this.config[key] = val;
 
-    _proto.repaintAudioButton = function repaintAudioButton() {
-      var _this7 = this;
+        if (key === 'autoPlay') {
+          return Promise.resolve();
+        }
 
-      return Promise.resolve().then(function () {
-        return functionToPromise$1(function () {
-          _this7.context.removeChild(_this7.audioButtonInstance.getAudioButton());
+        if (key === 'audioSrc') {
+          return Promise.resolve().then(function () {
+            return functionToPromise(function () {
+              _this5.stop();
+
+              _this5._initAudioInstance();
+            });
+          }).then(function () {
+            return functionToPromise(function () {
+              if (_this5.config.autoPlay) {
+                _this5.play();
+              }
+            });
+          });
+        }
+
+        if (this.state.isAudioButtonChanging) {
+          return Promise.resolve().then(function () {
+            return functionToPromise(function () {}, 10);
+          }).then(function () {
+            return _this5.change(key, val);
+          });
+        }
+
+        this.state.isAudioButtonChanging = true;
+        return Promise.resolve().then(function () {
+          if (!audioButtonNeedChange([_this5.config, _this5.audioButtonInstance.config])) {
+            _this5.state.isAudioButtonChanging = false;
+            return Promise.resolve();
+          }
+
+          return Promise.resolve().then(function () {
+            return _this5.repaintAudioButton();
+          }).then(function () {
+            return functionToPromise(function () {
+              _this5.state.isAudioButtonChanging = false;
+            });
+          });
         });
-      }).then(function () {
-        return functionToPromise$1(function () {
-          _this7._initAudioButtonInstance();
+      }
+      /**
+       * changeAudioSrc
+       * @param src
+       * @returns {Promise<void>}
+       */
+
+    }, {
+      key: "changeAudioSrc",
+      value: function changeAudioSrc(src) {
+        return this.change('audioSrc', src);
+      }
+      /**
+       * changePosition
+       * @param position
+       * @returns {Promise<void>}
+       */
+
+    }, {
+      key: "changePosition",
+      value: function changePosition(position) {
+        return this.change('position', position);
+      }
+      /**
+       * changeButtonSize
+       * @param size
+       * @returns {Promise<void>}
+       */
+
+    }, {
+      key: "changeButtonSize",
+      value: function changeButtonSize(size) {
+        return this.change('buttonSize', size);
+      }
+      /**
+       * changeIconSize
+       * @param size
+       * @returns {Promise<void>}
+       */
+
+    }, {
+      key: "changeIconSize",
+      value: function changeIconSize(size) {
+        return this.change('iconSize', size);
+      }
+      /**
+       * isPlaying
+       * @returns {boolean}
+       */
+
+    }, {
+      key: "isPlaying",
+      value: function isPlaying() {
+        return this.audioInstance.isPlaying();
+      }
+      /**
+       * eventBind
+       */
+
+    }, {
+      key: "eventBind",
+      value: function eventBind() {
+        var _this6 = this;
+
+        this.audioButtonInstance.getAudioButton().addEventListener('click', function (e) {
+          e.stopPropagation();
+
+          if (_this6.isPlaying()) {
+            _this6.pause();
+
+            return;
+          }
+
+          _this6.play();
         });
-      }).then(function () {
-        return _this7.appendAudioButton();
-      });
-    }
-    /**
-     * appendAudioButton
-     * @returns {Promise<void>}
-     */
-    ;
+        return this;
+      }
+      /**
+       * Repaint AudioButton
+       * @returns {Promise<void>}
+       */
 
-    _proto.appendAudioButton = function appendAudioButton() {
-      var _this8 = this;
+    }, {
+      key: "repaintAudioButton",
+      value: function repaintAudioButton() {
+        var _this7 = this;
 
-      return Promise.resolve().then(function () {
-        return functionToPromise$1(function () {
-          _this8.context.appendChild(_this8.audioButtonInstance.getAudioButton());
-
-          _this8.changeButtonUI();
-
-          _this8.eventBind();
+        return Promise.resolve().then(function () {
+          return functionToPromise(function () {
+            _this7.context.removeChild(_this7.audioButtonInstance.getAudioButton());
+          });
+        }).then(function () {
+          return functionToPromise(function () {
+            _this7._initAudioButtonInstance();
+          });
+        }).then(function () {
+          return _this7.appendAudioButton();
         });
-      });
-    }
-    /**
-     * Init
-     * @private
-     */
-    ;
+      }
+      /**
+       * appendAudioButton
+       * @returns {Promise<void>}
+       */
 
-    _proto._init = function _init() {
-      this._initAudioInstance();
+    }, {
+      key: "appendAudioButton",
+      value: function appendAudioButton() {
+        var _this8 = this;
 
-      this._initAudioButtonInstance();
-    }
-    /**
-     * InitAudioInstance
-     * @private
-     */
-    ;
+        return Promise.resolve().then(function () {
+          return functionToPromise(function () {
+            _this8.context.appendChild(_this8.audioButtonInstance.getAudioButton());
 
-    _proto._initAudioInstance = function _initAudioInstance() {
-      this.audioInstance = new _default({
-        audioSrc: this.config.audioSrc
-      });
-      return this;
-    }
-    /**
-     * InitAudioButtonInstance
-     * @private
-     */
-    ;
+            _this8.changeButtonUI();
 
-    _proto._initAudioButtonInstance = function _initAudioButtonInstance() {
-      this.audioButtonInstance = new _default$1({
-        buttonSize: this.config.buttonSize,
-        position: this.config.position,
-        positionType: this.config.positionType,
-        iconSize: this.config.iconSize,
-        playIcon: this.config.playIcon,
-        pauseIcon: this.config.pauseIcon
-      });
-      return this;
-    };
+            _this8.eventBind();
+          });
+        });
+      }
+      /**
+       * Init
+       * @private
+       */
 
-    return _default$2;
+    }, {
+      key: "_init",
+      value: function _init() {
+        this._initAudioInstance();
+
+        this._initAudioButtonInstance();
+      }
+      /**
+       * InitAudioInstance
+       * @private
+       */
+
+    }, {
+      key: "_initAudioInstance",
+      value: function _initAudioInstance() {
+        this.audioInstance = new _default$2({
+          audioSrc: this.config.audioSrc
+        });
+        return this;
+      }
+      /**
+       * InitAudioButtonInstance
+       * @private
+       */
+
+    }, {
+      key: "_initAudioButtonInstance",
+      value: function _initAudioButtonInstance() {
+        this.audioButtonInstance = new _default$1({
+          buttonSize: this.config.buttonSize,
+          position: this.config.position,
+          positionType: this.config.positionType,
+          iconSize: this.config.iconSize,
+          playIcon: this.config.playIcon,
+          pauseIcon: this.config.pauseIcon
+        });
+        return this;
+      }
+    }]);
+
+    return _default;
   }();
 
-  var instance = new CreateInstance$1();
+  var instance = CreateInstance();
   /**
    * h5AudioControls
    * @param param
@@ -927,7 +985,7 @@
       param[_key] = arguments[_key];
     }
 
-    var h5AudioControls = _construct(_default$2, param);
+    var h5AudioControls = _construct(_default, param);
 
     instance(h5AudioControls);
     return h5AudioControls;
@@ -935,7 +993,7 @@
 
   var H5AudioControls = {
     name: 'h5-audio-controls',
-    template: "<div :style=\"containerStyle\"></div>",
+    template: '<div :style="containerStyle"></div>',
     data: function data() {
       return {
         containerStyle: {
@@ -1020,4 +1078,4 @@
 
   return H5AudioControls;
 
-})));
+}));
