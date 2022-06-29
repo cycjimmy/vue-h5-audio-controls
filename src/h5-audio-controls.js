@@ -2,13 +2,13 @@ import h5AudioControls from '@cycjimmy/h5-audio-controls';
 
 export default {
   name: 'h5-audio-controls',
-  template: `<div :style="containerStyle"></div>`,
+  template: '<div :style="containerStyle"></div>',
   data() {
     return {
       containerStyle: {
         width: 0,
-        height: 0
-      }
+        height: 0,
+      },
     };
   },
   props: {
@@ -21,8 +21,8 @@ export default {
     pauseIcon: String,
     autoPlay: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   methods: {
     play() {
@@ -39,7 +39,7 @@ export default {
     },
     isPlaying() {
       return this.h5AudioControls.isPlaying();
-    }
+    },
   },
   watch: {
     src(val) {
@@ -62,7 +62,7 @@ export default {
     },
     autoPlay(val) {
       this.h5AudioControls.change('autoPlay', val);
-    }
+    },
   },
   mounted() {
     this.h5AudioControls = h5AudioControls(this.src, {
@@ -73,9 +73,9 @@ export default {
       iconSize: this.iconSize,
       playIcon: this.playIcon,
       pauseIcon: this.pauseIcon,
-      autoPlay: this.autoPlay
+      autoPlay: this.autoPlay,
     });
 
     this.h5AudioControls.load();
-  }
+  },
 };

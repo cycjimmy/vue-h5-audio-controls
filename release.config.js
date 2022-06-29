@@ -1,14 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-const makeCommonConfig = require('@cycjimmy/config-lib/semanticRelease/15.x/makeCommonConfig');
-
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+const makeConfig = require('@cycjimmy/config-lib/cjs/semanticRelease/19.x/makeConfigWithPgkRootForLibrary.cjs').default;
 const pkg = require('./package.json');
 
-module.exports = makeCommonConfig({
+module.exports = makeConfig({
   githubOptions: {
-    assets: [pkg.browser]
+    assets: [pkg.browser],
   },
-  exec: true,
-  execOptions: {
-    publishCmd: 'npm run build'
-  }
 });

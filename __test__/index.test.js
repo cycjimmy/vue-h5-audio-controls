@@ -1,3 +1,4 @@
+/* eslint no-undef: off */
 import Vue from 'vue';
 
 import H5AudioControls from '../src/index';
@@ -11,7 +12,7 @@ describe('install H5AudioControls', () => {
       template: `
       <div>
         <h5-audio-controls />
-      </div>`
+      </div>`,
     });
   });
 });

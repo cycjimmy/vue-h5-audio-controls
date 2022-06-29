@@ -1,7 +1,6 @@
 # vue-h5-audio-controls
 
 ![][workflows-badge-image]
-[![build status][travis-image]][travis-url]
 [![libraries dependency status][libraries-status-image]][libraries-status-url]
 [![libraries sourcerank][libraries-sourcerank-image]][libraries-sourcerank-url]
 [![Coverage Status][coverage-image]][coverage-url]
@@ -170,8 +169,6 @@ To use via a CDN include this in your html:
 [jsdelivr-url]: https://www.jsdelivr.com/package/npm/@cycjimmy/vue-h5-audio-controls
 
 [workflows-badge-image]: https://github.com/cycjimmy/vue-h5-audio-controls/workflows/Test%20CI/badge.svg
-[travis-image]: https://img.shields.io/travis/cycjimmy/vue-h5-audio-controls
-[travis-url]: https://travis-ci.org/cycjimmy/vue-h5-audio-controls
 
 [libraries-status-image]: https://img.shields.io/librariesio/release/npm/@cycjimmy/vue-h5-audio-controls
 [libraries-sourcerank-image]: https://img.shields.io/librariesio/sourcerank/npm/@cycjimmy/vue-h5-audio-controls

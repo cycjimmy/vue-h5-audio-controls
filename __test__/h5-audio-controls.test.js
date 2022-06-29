@@ -1,3 +1,4 @@
+/* eslint no-undef: off */
 import { mount } from '@vue/test-utils';
 
 import H5AudioControls from '../src/h5-audio-controls';
@@ -9,35 +10,35 @@ describe('H5AudioControls', () => {
       /* do nothing */
     };
     // eslint-disable-next-line func-names
-    window.HTMLMediaElement.prototype.play = function() {
+    window.HTMLMediaElement.prototype.play = function () {
       Object.defineProperty(this, 'paused', {
         configurable: true,
         get() {
           return false;
-        }
+        },
       });
     };
     // eslint-disable-next-line func-names
-    window.HTMLMediaElement.prototype.pause = function() {
+    window.HTMLMediaElement.prototype.pause = function () {
       Object.defineProperty(this, 'paused', {
         configurable: true,
         get() {
           return true;
-        }
+        },
       });
     };
   });
 
   const wrapper = mount(H5AudioControls, {
     propsData: {
-      src: 'https://www.xxx.com/foo.mp3'
-    }
+      src: 'https://www.xxx.com/foo.mp3',
+    },
   });
 
   const { vm } = wrapper;
 
   it('h5AudioControls is a Vue instance', () => {
-    expect(wrapper.isVueInstance()).toBeTruthy();
+    expect(vm).toBeTruthy();
   });
 
   it('h5AudioControls methods', () => {
@@ -58,7 +59,7 @@ describe('H5AudioControls', () => {
       iconSize: '10vw',
       playIcon: 'https://www.xxx.com/playIcon.svg',
       pauseIcon: 'https://www.xxx.com/pauseIcon.svg',
-      autoPlay: false
+      autoPlay: false,
     });
 
     setTimeout(done, 500);

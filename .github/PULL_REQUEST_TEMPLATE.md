@@ -9,7 +9,7 @@
 - [ ] test: Adding missing or correcting existing tests
 - [ ] chore: Changes to the build process or auxiliary tools and libraries such as documentation generation
 
-**Resolves** 
+**Resolves**
 - Fixes #[Add issue number here.]
 
 **Describe Changes**
