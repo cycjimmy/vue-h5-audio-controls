@@ -47,7 +47,7 @@
     "@cycjimmy/awesome-js-funcs": "^4.0.8",
     "@cycjimmy/config-lib": "^3.2.1",
     "@rollup/plugin-babel": "^6.0.0",
-    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-eslint": "^9.0.0",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
