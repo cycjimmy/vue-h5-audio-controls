@@ -39,7 +39,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@cycjimmy/h5-audio-controls": "5.0.3"
+    "@cycjimmy/h5-audio-controls": "5.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
