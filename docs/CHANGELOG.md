@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.2.0...v2.0.0) (2024-08-13)
+
+
+### Features
+
+* support vue3 ([351a7a5](https://github.com/cycjimmy/vue-h5-audio-controls/commit/351a7a5326f6071189da42b485a505e7149e54f0))
+
+
+### BREAKING CHANGES
+
+* support vue3 and no longer support vue2
+
 # [1.2.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.1.0...v1.2.0) (2022-06-29)
 
 
