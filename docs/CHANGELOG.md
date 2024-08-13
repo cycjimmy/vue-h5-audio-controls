@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v2.0.0...v2.0.1) (2024-08-13)
+
+
+### Bug Fixes
+
+* fix some doc ([bfdccde](https://github.com/cycjimmy/vue-h5-audio-controls/commit/bfdccdeb8108c9e3f925657c649760524f6baa5c))
+
 # [2.0.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v1.2.0...v2.0.0) (2024-08-13)
 
 
