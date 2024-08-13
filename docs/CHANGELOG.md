@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v2.0.1...v2.1.0) (2024-08-13)
+
+
+### Features
+
+* perfect type file ([977c5e4](https://github.com/cycjimmy/vue-h5-audio-controls/commit/977c5e427dca9753353524db1daaa38110500504))
+
 ## [2.0.1](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v2.0.0...v2.0.1) (2024-08-13)
 
 
