@@ -124,8 +124,11 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
 [![jsdelivr][jsdelivr-image]][jsdelivr-url]
 
 To use via a CDN include this in your html:
-```text
+```html
 <script src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@2/dist/h5-audio-controls.umd.js"></script>
+
+<!-- or -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@2/dist/h5-audio-controls.es.js"></script>
 ```
 
 <!-- Links: -->
@@ -149,7 +152,7 @@ To use via a CDN include this in your html:
 [release-date-image]: https://img.shields.io/github/release-date/cycjimmy/vue-h5-audio-controls
 [release-url]: https://github.com/cycjimmy/vue-h5-audio-controls/releases
 
-[vue-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/dev/vue
+[vue-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/vue
 [vue-url]: https://github.com/vuejs/vue
 
 [h5-audio-controls-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/@cycjimmy/h5-audio-controls

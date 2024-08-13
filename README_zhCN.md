@@ -132,8 +132,11 @@ Vue.use(H5AudioControls);
 [![jsdelivr][jsdelivr-image]][jsdelivr-url]
 
 使用CDN可在您的html中添加:
-```text
+```html
 <script src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@2/dist/h5-audio-controls.umd.js"></script>
+
+<!-- 或者 -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@2/dist/h5-audio-controls.es.js"></script>
 ```
 
 <!-- Links: -->
@@ -157,7 +160,7 @@ Vue.use(H5AudioControls);
 [release-date-image]: https://img.shields.io/github/release-date/cycjimmy/vue-h5-audio-controls
 [release-url]: https://github.com/cycjimmy/vue-h5-audio-controls/releases
 
-[vue-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/dev/vue
+[vue-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/vue
 [vue-url]: https://github.com/vuejs/vue
 
 [h5-audio-controls-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/@cycjimmy/h5-audio-controls
