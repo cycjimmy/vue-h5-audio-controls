@@ -3,15 +3,13 @@
 ![][workflows-badge-image]
 [![libraries dependency status][libraries-status-image]][libraries-status-url]
 [![libraries sourcerank][libraries-sourcerank-image]][libraries-sourcerank-url]
-[![Coverage Status][coverage-image]][coverage-url]
 [![Release date][release-date-image]][release-url]
-[![rollup][rollup-image]][rollup-url]
 [![semantic-release][semantic-image]][semantic-url]
-[![jest][jest-image]][jest-url]
 [![npm license][license-image]][download-url]
 
 * Simple h5 music controller for vue. [Demo][github-pages-url]. 
-* This plugin extends [@cycjimmy/h5-audio-controls][h5-audio-controls-url] to support vue@2. Its rendering mode is still DOM. [![h5 audio controls image][h5-audio-controls-image]][h5-audio-controls-url]
+* This plugin extends [@cycjimmy/h5-audio-controls][h5-audio-controls-url] to support vue@3. Its rendering mode is still DOM. [![h5 audio controls image][h5-audio-controls-image]][h5-audio-controls-url]
+* It is no longer supported vue@2. If you use vue@2, you can use [v1][github-tag-v1].
 
 Language: [En][Readme-url-En] | [中文][Readme-url-ZhCN]
 ***
@@ -31,23 +29,18 @@ $ yarn add @cycjimmy/vue-h5-audio-controls
 ### Usage
 [![vue][vue-image]][vue-url]
 
-Use plugin by calling the `Vue.use()`. This has to be done before you start your app by calling `new Vue()`:
-```javascript
-import Vue from 'vue';
-import H5AudioControls from '@cycjimmy/vue-h5-audio-controls';
-
-Vue.use(H5AudioControls);
-```
-
 Put `<h5-audio-controls />` into vue node which is preferably the root node
 ```vue
 <template>
-  <div>
-    <h5-audio-controls 
-      src="https://www.xxx.com/foo.mp3"
-    />
-  </div>
+  <h5-audio-controls :src />
 </template>
+
+<script setup>
+  import { ref } from 'vue';
+  import H5AudioControls from '@cycjimmy/vue-h5-audio-controls';
+
+  const src = ref('https://www.xxx.com/foo.mp3');
+</script>
 ```
 
 * Props
@@ -82,9 +75,10 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
 <template>
   <div>
     <h5-audio-controls 
-      ref="h5AudioControls"
+      ref="h5AudioControlsRef"
       :src="audioControlsConfig.src"
       :position="audioControlsConfig.position"
+      :positionType="audioControlsConfig.positionType"
       :buttonSize="audioControlsConfig.buttonSize"
       :iconSize="audioControlsConfig.iconSize"
       :playIcon="audioControlsConfig.playIcon"
@@ -97,56 +91,33 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
   </div>
 </template>
   
-<script>
+<script setup>
+  import { ref } from 'vue';
+  import H5AudioControls from '@cycjimmy/vue-h5-audio-controls';
+  
   import playIcon from './images/icon-play.png';
   import pauseIcon from './images/icon-pause.png';
 
-  export default {
-    name: 'app',
-    data() {
-      return {
-        audioControlsConfig: {
-          src: 'https://www.xxx.com/foo.mp3',
-          position: 'left-top',
-          buttonSize: '15vw',
-          iconSize: '12vw',
-          playIcon,
-          pauseIcon,
-          autoPlay: true
-        }
-      };
-    },
-    methods: {
-      trigger(){
-        if(this.$refs.h5AudioControls.isPlaying()) {
-          this.$refs.h5AudioControls.pause();
-        } else {
-          this.$refs.h5AudioControls.play();
-        }
-      }
+  const h5AudioControlsRef = ref();
+  const audioControlsConfig = ref({
+    src: 'https://www.xxx.com/foo.mp3',
+    position: 'left-top',
+    positionType: 'fixed',
+    buttonSize: '15vw',
+    iconSize: '12vw',
+    playIcon,
+    pauseIcon,
+    autoPlay: true,
+  });
+
+  const trigger = () => {
+    if (h5AudioControlsRef.value.isPlaying()) {
+      h5AudioControlsRef.value.pause();
+    } else {
+      h5AudioControlsRef.value.play();
     }
   };
 </script>
-```
-
-### Quick experience（Use in browser）
-```html
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-<script src="vue-h5-audio-controls.umd.min.js"></script>
-<script type="module">
-  Vue.use(H5AudioControls);
-
-  new Vue({
-    el: '#app',
-    template: `
-    <div>
-      <h5-audio-controls
-        src: 'https://www.xxx.com/foo.mp3'
-      />
-    </div>`,
-  });
-</script>
-<div id="app"></div>
 ```
 
 ## CDN
@@ -154,7 +125,7 @@ Put `<h5-audio-controls />` into vue node which is preferably the root node
 
 To use via a CDN include this in your html:
 ```text
-<script src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@1/dist/h5-audio-controls.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@cycjimmy/vue-h5-audio-controls@2/dist/h5-audio-controls.umd.js"></script>
 ```
 
 <!-- Links: -->
@@ -175,14 +146,8 @@ To use via a CDN include this in your html:
 [libraries-status-url]: https://libraries.io/github/cycjimmy/vue-h5-audio-controls
 [libraries-sourcerank-url]: https://libraries.io/npm/@cycjimmy%2Fvue-h5-audio-controls
 
-[coverage-image]: https://img.shields.io/coveralls/github/cycjimmy/vue-h5-audio-controls
-[coverage-url]: https://coveralls.io/github/cycjimmy/vue-h5-audio-controls
-
 [release-date-image]: https://img.shields.io/github/release-date/cycjimmy/vue-h5-audio-controls
 [release-url]: https://github.com/cycjimmy/vue-h5-audio-controls/releases
-
-[rollup-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/dev/rollup
-[rollup-url]: https://github.com/rollup/rollup
 
 [vue-image]: https://img.shields.io/github/package-json/dependency-version/cycjimmy/vue-h5-audio-controls/dev/vue
 [vue-url]: https://github.com/vuejs/vue
@@ -193,12 +158,10 @@ To use via a CDN include this in your html:
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
 
-[jest-image]: https://img.shields.io/badge/tested_with-jest-99424f.svg
-[jest-url]: https://github.com/facebook/jest
-
 [license-image]: https://img.shields.io/npm/l/@cycjimmy/vue-h5-audio-controls
 
 [github-pages-url]: https://cycjimmy.github.io/vue-h5-audio-controls/
+[github-tag-v1]: https://github.com/cycjimmy/vue-h5-audio-controls/tree/v1
 
 [Readme-url-En]: https://github.com/cycjimmy/vue-h5-audio-controls/blob/master/README.md
 [Readme-url-ZhCN]: https://github.com/cycjimmy/vue-h5-audio-controls/blob/master/README_zhCN.md
