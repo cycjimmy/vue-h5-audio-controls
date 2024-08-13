@@ -4,6 +4,6 @@ const pkg = require('./package.json');
 
 module.exports = makeConfig({
   githubOptions: {
-    assets: [pkg.browser],
+    assets: [pkg.main],
   },
 });
