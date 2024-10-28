@@ -42,7 +42,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@cycjimmy/h5-audio-controls": "5.0.4",
+    "@cycjimmy/h5-audio-controls": "5.0.5",
     "vue": "^3.4.35"
   },
   "devDependencies": {
