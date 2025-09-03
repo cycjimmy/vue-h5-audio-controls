@@ -55,7 +55,7 @@
     "@vue/eslint-config-prettier": "^10.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/test-utils": "^2.4.6",
-    "@vue/tsconfig": "^0.7.0",
+    "@vue/tsconfig": "^0.8.1",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
     "fs-extra": "^11.2.0",
