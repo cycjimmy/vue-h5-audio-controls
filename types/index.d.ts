@@ -1,28 +1,24 @@
-import {DefineComponent} from 'vue'
+import type { DefineComponent } from 'vue'
 
-declare module '@cycjimmy/vue-h5-audio-controls' {
-  interface Methods {
-    play(): void;
-
-    pause(): void;
-
-    stop(): void;
-
-    changeButtonUI(): void;
-
-    isPlaying(): boolean;
-  }
-
-  const H5AudioControls: DefineComponent<{
-    src: string;
-    position: string;
-    positionType: string;
-    buttonSize: string;
-    iconSize: string;
-    playIcon: string;
-    pauseIcon: string;
-    autoPlay: boolean;
-  }, {}, Methods>;
-
-  export default H5AudioControls;
+export interface H5AudioControlsMethods {
+  play: () => void
+  pause: () => void
+  stop: () => void
+  changeButtonUI: () => void
+  isPlaying: () => boolean
 }
+
+export interface H5AudioControlsProps {
+  src?: string
+  position?: 'left-top' | 'top-right' | 'right-bottom' | 'left-bottom'
+  positionType?: 'fixed' | 'absolute' | 'relative' | 'sticky' | 'static'
+  buttonSize?: string | number
+  iconSize?: string | number
+  playIcon?: string
+  pauseIcon?: string
+  autoPlay?: boolean
+}
+
+declare const H5AudioControls: DefineComponent<H5AudioControlsProps, H5AudioControlsMethods>
+
+export default H5AudioControls

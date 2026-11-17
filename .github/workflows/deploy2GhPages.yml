@@ -1,0 +1,65 @@
+name: Deploy To GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  # Manual trigger, so a deployment can be verified without waiting for a push.
+  workflow_dispatch:
+  # A dependabot merge runs as `github-actions[bot]`, and a push made with
+  # `GITHUB_TOKEN` starts no other workflow. The auto-merge workflow asks for the
+  # deployment through this event instead, because a dependency bump can change
+  # the bundled output even though the source did not move.
+  repository_dispatch:
+    types: [dependabot-merged]
+
+# `pages: write` publishes the site and `id-token: write` lets the deployment
+# prove it was started by this workflow. No token of any kind is stored: the
+# site is uploaded as an artifact and published by `actions/deploy-pages`
+# instead of being pushed to the `gh-pages` branch, so the build is a run of
+# this workflow rather than a side effect of a branch push.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time. Cancelling a running one would publish a half
+# written site, so a second run waits instead.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      # Builds the UMD bundle and assembles .publish (static/ + the bundle + the
+      # Vue global build), which is exactly what Pages serves.
+      - name: Pre-built
+        run: |
+          npm ci
+          npm run build:deployment
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload the build output
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .publish
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

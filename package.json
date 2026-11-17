@@ -1,30 +1,17 @@
 {
   "name": "@cycjimmy/vue-h5-audio-controls",
+  "type": "module",
   "version": "2.1.0",
   "description": "Simple h5 music controller for vue",
-  "type": "module",
-  "main": "dist/h5-audio-controls.umd.js",
-  "module": "dist/h5-audio-controls.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/h5-audio-controls.es.js",
-      "require": "./dist/h5-audio-controls.umd.js"
-    }
-  },
-  "types": "types/index.d.ts",
-  "scripts": {
-    "dev": "vite",
-    "build": "trash dist && run-p type-check \"build-only {@}\" --",
-    "test": "vitest --silent=false",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
-    "format": "prettier --write src/",
-    "package": "trash .release && npm run build && node tasks/copyFiles.js && node tasks/handlePackageJson.js"
-  },
+  "author": "cycjimmy <cycjimmy@gmail.com> (https://github.com/cycjimmy)",
+  "license": "MIT",
+  "homepage": "https://github.com/cycjimmy/vue-h5-audio-controls#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cycjimmy/vue-h5-audio-controls.git"
+    "url": "git+https://github.com/cycjimmy/vue-h5-audio-controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cycjimmy/vue-h5-audio-controls/issues"
   },
   "keywords": [
     "vue",
@@ -32,40 +19,76 @@
     "audio",
     "control"
   ],
-  "author": "cycjimmy <cycjimmy@gmail.com> (https://github.com/cycjimmy)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cycjimmy/vue-h5-audio-controls/issues"
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/h5-audio-controls.esm.js",
+      "default": "./dist/h5-audio-controls.esm.js"
+    },
+    "./package.json": "./package.json"
   },
-  "homepage": "https://github.com/cycjimmy/vue-h5-audio-controls#readme",
+  "main": "dist/h5-audio-controls.esm.js",
+  "module": "dist/h5-audio-controls.esm.js",
+  "browser": "dist/h5-audio-controls.umd.min.js",
+  "unpkg": "dist/h5-audio-controls.umd.min.js",
+  "jsdelivr": "dist/h5-audio-controls.umd.min.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "trash dist && npm run type-check && npm run build:esm && npm run build:umd && npm run build:umd:min",
+    "build:esm": "vite build --mode esm",
+    "build:umd": "vite build --mode umd",
+    "build:umd:min": "vite build --mode umd-min",
+    "build:deployment": "vite build --mode deployment && node tasks/copyPublishFiles.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:style": "stylelint \"src/**/*.{vue,css,scss}\"",
+    "lint:style:fix": "stylelint \"src/**/*.{vue,css,scss}\" --fix",
+    "test": "vitest --silent=false",
+    "test:coverage": "vitest run --coverage --silent=false",
+    "type-check": "vue-tsc --build --force",
+    "package": "trash .release && npm run build && node tasks/copyFiles.js && node tasks/handlePackageJson.js"
+  },
   "publishConfig": {
     "access": "public"
   },
+  "peerDependencies": {
+    "vue": "^3.4.0"
+  },
   "dependencies": {
-    "@cycjimmy/h5-audio-controls": "5.0.5",
-    "vue": "^3.4.35"
+    "@cycjimmy/h5-audio-controls": "^6.0.1"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^10.0.0",
     "@cycjimmy/config-lib": "^3.2.2",
-    "@rushstack/eslint-patch": "^1.8.0",
-    "@tsconfig/node20": "^20.1.4",
-    "@types/jsdom": "^21.1.7",
-    "@types/node": "^24.3.0",
-    "@vitejs/plugin-vue": "^5.0.5",
-    "@vue/eslint-config-prettier": "^10.0.0",
-    "@vue/eslint-config-typescript": "^13.0.0",
-    "@vue/test-utils": "^2.4.6",
+    "@tsconfig/node22": "^22.0.7",
+    "@types/node": "^24.19.2",
+    "@vitejs/plugin-vue": "^6.0.11",
+    "@vitest/coverage-v8": "^5.1.0",
+    "@vue/test-utils": "^2.6.0",
     "@vue/tsconfig": "^0.9.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-vue": "^9.23.0",
-    "fs-extra": "^11.2.0",
-    "jsdom": "^26.0.0",
-    "npm-run-all2": "^8.0.1",
-    "prettier": "^3.2.5",
-    "trash-cli": "^6.0.0",
-    "typescript": "~5.9.2",
-    "vite": "^6.0.3",
-    "vitest": "^4.1.6",
-    "vue-tsc": "^3.0.6"
+    "eslint": "^10.15.0",
+    "fs-extra": "^11.4.1",
+    "globals": "^17.14.0",
+    "jsdom": "^31.0.1",
+    "postcss-html": "^2.0.1",
+    "stylelint": "^18.0.0",
+    "stylelint-config-idiomatic-order": "^10.0.0",
+    "stylelint-config-standard": "^41.0.0",
+    "terser": "^5.51.2",
+    "trash-cli": "^7.2.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0",
+    "vue": "^3.5.45",
+    "vue-tsc": "^3.3.14",
+    "yaml": "^2.9.1"
   }
 }

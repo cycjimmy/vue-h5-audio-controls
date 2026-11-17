@@ -1,0 +1,142 @@
+name: Dependabot Auto Merge
+on: pull_request
+permissions:
+  contents: write
+  pull-requests: write
+  # `gh pr checks` reads check runs and commit statuses; an unspecified scope is `none`
+  # once `permissions` is declared.
+  checks: read
+  statuses: read
+jobs:
+  auto-merge:
+    # Fork pull requests never receive a write token, so gate on the same-repo branch too.
+    if: >-
+      github.actor == 'dependabot[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    # A stuck check must fail the job instead of holding a runner for six hours
+    timeout-minutes: 30
+    steps:
+      - id: metadata
+        uses: dependabot/fetch-metadata@v3
+
+      # `main` carries no required status check, because semantic-release has to
+      # push its version commit there and GitHub rejects that push while one is
+      # configured. The gate therefore lives here: wait for the aggregated CI
+      # check and only then ask for the merge.
+      #
+      # `gh pr checks --watch` cannot be used here: the check list contains this
+      # very job, so watching it would wait for itself until the job times out.
+      # Only the explicitly expected check names are polled instead.
+      - name: Wait for the pull request checks
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUIRED_CHECKS: Test CI Summary
+        run: |
+          for _ in $(seq 1 120); do
+            # `gh pr checks` exits non-zero while checks are pending or failing but
+            # still prints the JSON: a `|| echo '[]'` fallback would append a second
+            # document and make jq emit two lines, hiding a real failure until the
+            # poll times out. Keep the output and fall back only when it is empty.
+            checks=$(gh pr checks "$PR_URL" --json name,bucket 2>/dev/null) || true
+            checks=${checks:-[]}
+            state=$(printf '%s' "$checks" | jq -r --arg required "$REQUIRED_CHECKS" '
+              ($required | split("\n") | map(select(length > 0))) as $want
+              | [ .[] | select(.name as $name | any($want[]; $name == .)) ] as $got
+              | if any($got[]; .bucket == "fail" or .bucket == "cancel") then "failed"
+                elif ($got | length) < ($want | length) then "waiting"
+                elif all($got[]; .bucket == "pass" or .bucket == "skipping") then "passed"
+                else "waiting" end
+            ')
+
+            case "$state" in
+              passed) exit 0 ;;
+              failed)
+                printf '%s' "$checks" | jq -r '.[] | select(.bucket == "fail" or .bucket == "cancel") | "  \(.name): \(.bucket)"'
+                echo "::error::A check on the pull request did not pass."
+                exit 1
+                ;;
+            esac
+
+            # A new push restarts this workflow with a fresh gate, so stop here.
+            current=$(gh pr view "$PR_URL" --json headRefOid --jq .headRefOid)
+            if [ "$current" != "$PR_HEAD_SHA" ]; then
+              echo "The pull request head moved to ${current}; leaving it to the next run."
+              exit 0
+            fi
+
+            echo "Still waiting for: $REQUIRED_CHECKS"
+            sleep 10
+          done
+
+          echo "::error::Timed out waiting for: $REQUIRED_CHECKS"
+          exit 1
+
+      - name: Merge the pull request
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # `main` has no required status check, so the merge lands immediately.
+          # GitHub rejects the request while a check other than this one is still
+          # running (`Pull request is in unstable status`), and the name based gate
+          # above cannot rule that out: a second run of the same workflow registers
+          # identically named checks on the same commit, and its summary does not
+          # exist yet while its matrix is still running.
+          #
+          # Waiting for `mergeStateStatus` to become `CLEAN` is not an option here:
+          # this job is a check on that same commit, so it would wait for itself.
+          # Retry the request instead, and re-check the head on every attempt so a
+          # push in between leaves the merge to the run it starts.
+          #
+          # `--auto` is deliberately not used: it only enqueues the request and
+          # exits successfully, so its exit code says nothing about the pull request
+          # being merged. The deployment below runs against the default branch as it
+          # is right now, so it must not be dispatched before the merge landed. The
+          # retry window is wide enough for the remaining checks to settle, and
+          # `timeout-minutes` bounds the job.
+          for attempt in $(seq 1 30); do
+            current=$(gh pr view "$PR_URL" --json headRefOid --jq .headRefOid)
+            if [ "$current" != "$PR_HEAD_SHA" ]; then
+              echo "The pull request head moved to ${current}; leaving it to the next run."
+              exit 0
+            fi
+
+            if gh pr merge --squash --match-head-commit "$PR_HEAD_SHA" "$PR_URL"; then
+              # `gh pr merge` exits once the merge is accepted. Confirm the state
+              # before dispatching, so a deployment can never publish the commit
+              # the merge has not produced yet.
+              for _ in $(seq 1 12); do
+                state=$(gh pr view "$PR_URL" --json state --jq .state)
+                if [ "$state" = "MERGED" ]; then
+                  # The merge runs as `github-actions[bot]`, and a push made with
+                  # `GITHUB_TOKEN` does not start other workflows.
+                  # `repository_dispatch` is one of the events that token may raise,
+                  # so the Pages deployment is requested explicitly instead of
+                  # relying on the `push` to `main`. The release is not requested on
+                  # purpose: dependabot commits are `chore(deps):`, which
+                  # semantic-release does not turn into a version.
+                  gh api -X POST "repos/${GITHUB_REPOSITORY}/dispatches" \
+                    -f event_type=dependabot-merged >/dev/null \
+                    || echo "::warning::Merged, but the follow-up workflows could not be dispatched."
+                  exit 0
+                fi
+
+                sleep 5
+              done
+
+              echo "::warning::The merge was accepted but the pull request is still ${state}; the deployment was not dispatched."
+              exit 0
+            fi
+
+            echo "Retrying the merge request (attempt ${attempt}/30)"
+            sleep 10
+          done
+
+          echo "::error::Could not merge the pull request."
+          exit 1

@@ -1,23 +1,24 @@
-import { resolve } from 'node:path';
-import fs from 'fs-extra';
+import path from 'node:path'
+
+import fs from 'fs-extra'
 
 const { copySync } = fs
 
 copySync(
-  resolve('dist'),
-  resolve('.release', 'dist')
+  path.resolve('dist'),
+  path.resolve('.release', 'dist'),
 )
 copySync(
-  resolve('types'),
-  resolve('.release', 'types')
+  path.resolve('types'),
+  path.resolve('.release', 'types'),
 )
 copySync(
-  resolve('README.md'),
-  resolve('.release', 'README.md')
+  path.resolve('README.md'),
+  path.resolve('.release', 'README.md'),
 )
 copySync(
-  resolve('LICENSE'),
-  resolve('.release', 'LICENSE')
+  path.resolve('LICENSE'),
+  path.resolve('.release', 'LICENSE'),
 )
 
 console.log('copyFiles success!')

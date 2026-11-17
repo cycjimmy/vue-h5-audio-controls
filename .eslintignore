@@ -1,4 +1,0 @@
-dist/*
-coverage/*
-.release/*
-release.config.cjs
