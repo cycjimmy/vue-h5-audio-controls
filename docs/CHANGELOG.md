@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v2.1.0...v3.0.0) (2026-11-17)
+
+
+### Features
+
+* migrate to vite 8, eslint 10 and an esm-only package ([5754f54](https://github.com/cycjimmy/vue-h5-audio-controls/commit/5754f545caeb0f86d46711bdf0a626e0d86d9a07)), closes [#654](https://github.com/cycjimmy/vue-h5-audio-controls/issues/654)
+
+
+### BREAKING CHANGES
+
+* the require entry point and the CJS bundle are gone, so import is the only entry point; the bundles are renamed to h5-audio-controls.esm.js with h5-audio-controls.umd.min.js for CDN usage; vue is a peer dependency and @cycjimmy/h5-audio-controls is bumped to 6.x; the toolchain requires Node.js ^22.22.2 || ^24.15.0 || >=26.0.0.
+
 # [2.1.0](https://github.com/cycjimmy/vue-h5-audio-controls/compare/v2.0.1...v2.1.0) (2024-08-13)
 
 

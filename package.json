@@ -1,7 +1,7 @@
 {
   "name": "@cycjimmy/vue-h5-audio-controls",
   "type": "module",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Simple h5 music controller for vue",
   "author": "cycjimmy <cycjimmy@gmail.com> (https://github.com/cycjimmy)",
   "license": "MIT",
