@@ -1,0 +1,229 @@
+name: Issue Bot
+
+# Rule-based triage for issues: label/reply on newly opened issues, and release
+# the needs-info label once the reporter comes back with details.
+#
+# The needs-info label is treated as a function of the live issue, not of the
+# event that triggered the run. GitHub keeps one running and one pending run per
+# concurrency group and cancels an older pending run, so an `opened` run can
+# start after the reporter's `edited` run was already consumed. Deciding from
+# "what happened" would then add the label with nothing left to remove it;
+# deciding from "what is true now" makes every order converge to the same state.
+#
+# Unrelated events are filtered out at the job level. A title-only edit or a
+# maintainer comment would otherwise occupy the single pending slot and displace
+# a reporter event that still had work to do.
+#
+# All untrusted issue content is passed through environment variables (never
+# interpolated into a shell command) so it cannot break out of the workflow.
+
+on:
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+
+jobs:
+  triage:
+    name: Triage the issue
+    if: >-
+      !github.event.issue.pull_request &&
+      !endsWith(github.event.sender.login, '[bot]') &&
+      (
+      (github.event_name == 'issues' && github.event.action == 'opened') ||
+      (
+      github.event.sender.login == github.event.issue.user.login &&
+      (
+      (github.event_name == 'issues' && github.event.action == 'edited' && github.event.changes.body != null) ||
+      github.event_name == 'issue_comment'
+      )
+      )
+      )
+    runs-on: ubuntu-latest
+    concurrency:
+      group: issue-triage-${{ github.repository }}-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - name: Apply triage rules
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            // Live state, not the event payload: a run can start long after its
+            // event fired, and by then the reporter may already have written the
+            // details the rules would otherwise ask for.
+            const { data: issue } = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+            });
+
+            const labelNames = (target) => (target.labels || [])
+              .map((label) => (typeof label === 'string' ? label : label.name));
+            const hasLabel = (name) => labelNames(issue).includes(name);
+
+            const isCommentEvent = context.payload.comment != null;
+            const isOpened = context.payload.action === 'opened' && !isCommentEvent;
+
+            // Hidden markers so every automated reply stays idempotent, even when a
+            // replayed or delayed event re-evaluates the same issue
+            const NEEDS_INFO_MARKER = '<!-- issue-bot:needs-info -->';
+            const PUBLISH_AUTH_MARKER = '<!-- issue-bot:publish-auth -->';
+            const USAGE_MARKER = '<!-- issue-bot:usage -->';
+
+            const labels = (names) => github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: names,
+            }).catch((error) => {
+              // A label missing from the repository is a configuration problem,
+              // it must not take the whole triage run down with it
+              if (error.status !== 422) throw error;
+              core.warning(`Label missing from the repository: ${names.join(', ')}`);
+            });
+
+            const removeLabel = (name) => github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              name,
+            }).catch((error) => {
+              // The label is already gone, nothing to do
+              if (error.status !== 404) throw error;
+            });
+
+            const reply = (message) => github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: message,
+            });
+
+            const body = issue.body || '';
+            const lower = ((issue.title || '') + '\n' + body).toLowerCase();
+
+            // Drop only the scaffolding the issue forms generate: their own
+            // "### <label>" headings and the "_No response_" placeholders.
+            // Everything else - including headings, issue references and code
+            // comments written by the reporter - counts as information.
+            const formHeading = /^###\s+(Describe the bug|Version|Environment|Steps to reproduce|Relevant configuration|Expected behavior|Relevant log output|Additional context|Is your feature request related to a problem\?|Describe the solution you'd like|Describe alternatives you've considered)$/i;
+            const userContent = body
+              .split('\n')
+              .map((line) => line.trim())
+              .filter((line) => line && !formHeading.test(line) && !/^_no response_$/i.test(line))
+              .join('\n');
+
+            // The thread is part of the state: the hidden markers below make every
+            // automated reply idempotent, and the reporter's own comments decide
+            // both directions of the needs-info label.
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              per_page: 100,
+            });
+            const commented = (marker) => comments.some((comment) =>
+              (comment.body || '').includes(marker));
+            // A reply from the reporter counts as engagement. It is the same
+            // condition the label itself is released on, so both directions read
+            // from one signal.
+            const reporterCommented = comments.some((comment) =>
+              comment.user && comment.user.login === issue.user.login
+              && (comment.body || '').trim().length > 0);
+            const insufficient = userContent.length < 200 && !reporterCommented;
+
+            // Rules 1-2: keyword routing, for a fresh issue only, and never with an
+            // early return: a run that stopped here would skip the needs-info
+            // reconciliation below, and a delayed run of another kind could then
+            // leave the label in a state nothing else repairs. `routed` also exempts
+            // these issues from the generic lifecycle, because they already carry a
+            // targeted follow-up question and closing them for "no information"
+            // would punish the reporter for answering the wrong prompt.
+            let routed = hasLabel('publish-auth') || hasLabel('usage');
+            if (isOpened && !hasLabel('triaged')) {
+              // Rule 1: publishing to npm or the GitHub Package Registry fails
+              if (/e40[13]|forbidden|authentication|npm publish|publish (fail|error)|registry/.test(lower)) {
+                routed = true;
+                await labels(['publish-auth']);
+                if (!commented(PUBLISH_AUTH_MARKER)) {
+                  await reply(
+                    'This looks like a publishing or registry authentication problem.\n\n' +
+                    'This package publishes to npm and to the GitHub Package Registry ' +
+                    '(GPR) from the Release workflow. Common causes:\n\n' +
+                    '- The npm trusted publisher entry does not match this repository ' +
+                    'or the `release.yml` workflow filename\n' +
+                    '- The workflow lacks the `packages: write` permission\n' +
+                    '- The package scope does not match the GitHub owner for GPR ' +
+                    '(`@<owner>/...`)\n\n' +
+                    'Please attach the relevant part of the workflow run log so we can ' +
+                    'take a closer look.\n\n' +
+                    PUBLISH_AUTH_MARKER
+                  );
+                }
+              }
+              else if (/how (do|to|can i)|is there a way|any way to|\busage\b/.test(lower)) {
+                // Rule 2: question about how to use the component. Deliberately narrow:
+                // prop names such as `positionType` or `iconSize` show up in ordinary
+                // bug reports too, so only explicit "how do I" phrasing matches.
+                routed = true;
+                await labels(['usage']);
+                if (!commented(USAGE_MARKER)) {
+                  await reply(
+                    'This looks like a usage question.\n\n' +
+                    'Please take a look at the [README](../blob/main/README.md) for the ' +
+                    'available props and methods, and at ' +
+                    '[CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for the local ' +
+                    'development setup.\n\n' +
+                    'If that does not answer your question, let us know what you are ' +
+                    'trying to achieve and where you got stuck.\n\n' +
+                    USAGE_MARKER
+                  );
+                }
+              }
+            }
+
+            // Rules 3-4: `needs-info` is a pure function of the live state, so
+            // neither direction depends on which event ran first. Routing and the
+            // triage label belong to that state instead of being a reason to skip
+            // the reconciliation: an issue that becomes routed while the label is
+            // set has to lose it, otherwise the 7-day cleanup closes it for a
+            // reason the bot itself decided does not apply.
+            const wantsNeedsInfo = insufficient && !routed && !hasLabel('triaged');
+
+            if (wantsNeedsInfo) {
+              // "The label is there" and "the reason was explained" are two
+              // separate assertions: a comment that failed to post must not be
+              // able to leave the label unexplained for the rest of the issue.
+              if (!hasLabel('needs-info'))
+                await labels(['needs-info']);
+              // Worded so it fits both the opening event and a later edit, and
+              // posted at most once: a second thin edit only keeps the label.
+              if (!commented(NEEDS_INFO_MARKER)) {
+                await reply(
+                  'There is not enough information in this issue to investigate it ' +
+                  'yet. Please edit it and add:\n\n' +
+                  '- The version of `@cycjimmy/vue-h5-audio-controls` and of `vue` you are using\n' +
+                  '- How you load the component (ESM import, UMD `<script>` or a CDN URL)\n' +
+                  '- The props you pass to `<h5-audio-controls>` and the surrounding code\n' +
+                  '- Any error from the browser console or the Network tab\n\n' +
+                  'The issue will be closed automatically if there is no response within 7 days.\n\n' +
+                  NEEDS_INFO_MARKER
+                );
+              }
+            }
+            else if (hasLabel('needs-info')) {
+              await removeLabel('needs-info');
+              // Only the "the details arrived" path owes the reporter a thank-you;
+              // releasing the label because the issue was routed or triaged is
+              // internal bookkeeping and would just add noise.
+              if (!insufficient) {
+                await reply(
+                  'Thanks for the additional details! The `needs-info` label has ' +
+                  'been removed, so this issue is back in the normal review queue.'
+                );
+              }
+            }

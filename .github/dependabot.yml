@@ -1,11 +1,42 @@
 version: 2
 updates:
+  # Minor and patch updates are batched into one pull request per ecosystem, so a
+  # single green run moves the whole group and the limited number of slots stays
+  # available for the majors. Majors are deliberately left out of the groups:
+  # each one needs its own review, and the auto-merge workflow skips them anyway.
+  #
+  # Limits apply per ecosystem to open Dependabot version-update pull requests,
+  # whether grouped or individual; security updates have a separate fixed limit
+  # of 10. A stale version-update pull request only blocks new ones once the
+  # limit is reached, so the values are stated explicitly instead of relying on
+  # the default.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: daily
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - ci
+    groups:
+      github-actions-minor-patch:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: daily
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    groups:
+      npm-minor-patch:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch

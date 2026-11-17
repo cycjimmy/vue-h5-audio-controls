@@ -1,6 +1,6 @@
-import { defineComponent, onMounted, ref, watch } from 'vue'
-// @ts-ignore
+// @ts-expect-error -- @cycjimmy/h5-audio-controls ships no type declarations.
 import h5AudioControls from '@cycjimmy/h5-audio-controls'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 
 export default defineComponent({
   props: {
@@ -13,8 +13,8 @@ export default defineComponent({
     pauseIcon: String,
     autoPlay: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   setup(props) {
     const wrapperRef = ref(null)
@@ -26,7 +26,7 @@ export default defineComponent({
         if (h5AudioControlsIns.value) {
           h5AudioControlsIns.value.changeAudioSrc(val)
         }
-      }
+      },
     )
 
     watch(
@@ -35,7 +35,7 @@ export default defineComponent({
         if (h5AudioControlsIns.value) {
           h5AudioControlsIns.value.changePosition(val)
         }
-      }
+      },
     )
 
     watch(
@@ -44,7 +44,7 @@ export default defineComponent({
         if (h5AudioControlsIns.value) {
           h5AudioControlsIns.value.changeButtonSize(val)
         }
-      }
+      },
     )
 
     watch(
@@ -53,7 +53,7 @@ export default defineComponent({
         if (h5AudioControlsIns.value) {
           h5AudioControlsIns.value.changeIconSize(val)
         }
-      }
+      },
     )
 
     watch(
@@ -62,25 +62,7 @@ export default defineComponent({
         if (h5AudioControlsIns.value) {
           h5AudioControlsIns.value.change('playIcon', val)
         }
-      }
-    )
-
-    watch(
-      () => props.playIcon,
-      (val) => {
-        if (h5AudioControlsIns.value) {
-          h5AudioControlsIns.value.change('playIcon', val)
-        }
-      }
-    )
-
-    watch(
-      () => props.playIcon,
-      (val) => {
-        if (h5AudioControlsIns.value) {
-          h5AudioControlsIns.value.change('playIcon', val)
-        }
-      }
+      },
     )
 
     watch(
@@ -89,7 +71,7 @@ export default defineComponent({
         if (h5AudioControlsIns.value) {
           h5AudioControlsIns.value.change('pauseIcon', val)
         }
-      }
+      },
     )
 
     watch(
@@ -98,7 +80,7 @@ export default defineComponent({
         if (h5AudioControlsIns.value) {
           h5AudioControlsIns.value.change('autoPlay', val)
         }
-      }
+      },
     )
 
     onMounted(() => {
@@ -110,38 +92,38 @@ export default defineComponent({
         iconSize: props.iconSize,
         playIcon: props.playIcon,
         pauseIcon: props.pauseIcon,
-        autoPlay: props.autoPlay
+        autoPlay: props.autoPlay,
       })
       if (h5AudioControlsIns.value) {
         h5AudioControlsIns.value.load()
       }
     })
 
-    const play = () => {
+    const play = (): void => {
       if (h5AudioControlsIns.value) {
         h5AudioControlsIns.value.play()
       }
     }
 
-    const pause = () => {
+    const pause = (): void => {
       if (h5AudioControlsIns.value) {
         h5AudioControlsIns.value.pause()
       }
     }
 
-    const stop = () => {
+    const stop = (): void => {
       if (h5AudioControlsIns.value) {
         h5AudioControlsIns.value.stop()
       }
     }
 
-    const changeButtonUI = () => {
+    const changeButtonUI = (): void => {
       if (h5AudioControlsIns.value) {
         h5AudioControlsIns.value.changeButtonUI()
       }
     }
 
-    const isPlaying = () => {
+    const isPlaying = (): boolean => {
       if (!h5AudioControlsIns.value) {
         return false
       }
@@ -154,7 +136,7 @@ export default defineComponent({
       pause,
       stop,
       changeButtonUI,
-      isPlaying
+      isPlaying,
     }
-  }
+  },
 })
