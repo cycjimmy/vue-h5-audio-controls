@@ -80,4 +80,4 @@ The triage bot and the issue forms reference labels that have to exist in the re
 
 ## Commits
 
-[Conventional Commits](https://www.conventionalcommits.org/) are required: `semantic-release` derives the version and the changelog from them. A breaking change must be marked with `!` and a `BREAKING CHANGE:` footer. Commit subjects and bodies, pull request titles and bodies, and issue comments are written in English.
+[Conventional Commits](https://www.conventionalcommits.org/) are required: `semantic-release` derives the version and the changelog from them. A breaking change must be declared with a `BREAKING CHANGE:` footer: the angular preset used by `release.config.js` does not parse the `!` shorthand in the header, so `feat!:` alone releases nothing. Commit subjects and bodies, pull request titles and bodies, and issue comments are written in English.
